@@ -47,20 +47,20 @@ const userSchema = new mongoose.Schema({
             credentials: [String],
         },
     ],
-    experiences: [
-        {
-            companyName: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "Community",
-                required: true,
-            },
-            position: {
-                type: String,
-                required: true,
-            },
-            credentials: [String],
-        },
-    ],
+    // experiences: [
+    //     {
+    //         companyName: {
+    //             type: mongoose.Schema.Types.ObjectId,
+    //             ref: "Community",
+    //             required: true,
+    //         },
+    //         position: {
+    //             type: String,
+    //             required: true,
+    //         },
+    //         credentials: [String],
+    //     },
+    // ],
 });
 
 const User = mongoose.models.User || mongoose.model("User", userSchema);

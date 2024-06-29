@@ -14,4 +14,7 @@ export const UserValidation = z.object({
     .string()
     .min(3, { message: "Minimum 3 characters." })
     .max(1000, { message: "Maximum 1000 caracters." }),
+  skillName: z
+    .string()
+    .max(30, { message: "Maximum 30 caracters." }),
 });

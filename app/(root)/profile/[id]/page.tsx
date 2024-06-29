@@ -9,7 +9,8 @@ import ProfileHeader from "@/components/shared/ProfileHeader";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { fetchUser } from "@/lib/actions/user.actions";
-import SkillForm from "@/components/forms/SkillForm";
+import SkillTab from "@/components/shared/SkillTab";
+// import SkillForm from "@/components/forms/SkillForm";
 
 async function Page({ params }: { params: { id: string } }) {
     const user = await currentUser();
@@ -17,7 +18,18 @@ async function Page({ params }: { params: { id: string } }) {
 
     const userInfo = await fetchUser(params.id);
     if (!userInfo?.onboarded) redirect("/onboarding");
-    
+    // console.log("userInfo = ", userInfo);
+
+    const skillSet = [];
+    // iterate over each element in userInfo.skillSet
+    for (let i = 0; i < userInfo?.skillSet.length; i++) {
+
+
+        skillSet.push({
+            skillName: userInfo?.skillSet[i].skillName,
+            credentials: userInfo?.skillSet[i].credentials
+        });
+    }
 
     return (
         <section>
@@ -33,7 +45,7 @@ async function Page({ params }: { params: { id: string } }) {
             />
 
             <div className='mt-9'>
-                <Tabs defaultValue='posts' className='w-full'>
+                <Tabs defaultValue='skills' className='w-full'>
 
 
 
@@ -81,7 +93,7 @@ async function Page({ params }: { params: { id: string } }) {
                         value="skills"
                         className="w-full text-black"
                     >
-                        <SkillForm skillSet={userInfo.skillSet ? userInfo.skillSet : []} userId={userInfo.id} />
+                        <SkillTab skills={skillSet} />
 
                     </TabsContent>
 

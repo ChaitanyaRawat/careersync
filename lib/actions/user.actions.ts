@@ -8,7 +8,7 @@ import Thread from "../models/thread.model";
 import User from "../models/user.model";
 
 import { connectToDB } from "../mongoose";
-import { skill } from "@/components/forms/SkillForm";
+import { skill } from "@/components/forms/AccountProfile";
 
 export async function fetchUser(userId: string) {
     try {
@@ -30,7 +30,7 @@ interface Params {
     bio: string;
     image: string;
     path: string;
-
+    skillSet: skill[];
 }
 
 export async function updateUser({
@@ -40,6 +40,7 @@ export async function updateUser({
     path,
     username,
     image,
+    skillSet,
 }: Params): Promise<void> {
     try {
         connectToDB();
@@ -52,6 +53,7 @@ export async function updateUser({
                 bio,
                 image,
                 onboarded: true,
+                skillSet: skillSet,
             },
             { upsert: true }
         );
@@ -64,22 +66,23 @@ export async function updateUser({
     }
 }
 
-export async function updateUserSkillSet({ userId, skillSet }: { userId: string, skillSet: skill[] }) {
-    connectToDB();
-    try {
+// export async function updateUserSkillSet({ userId, skillSet }: { userId: string, skillSet: skill[] }) {
+//     connectToDB();
+//     try {
+//         console.log("skillset recieved = ", skillSet);
 
-        await User.findOneAndUpdate(
-            { id: userId },
-            {
-                skillSet,
-            },
-            { upsert: true }
-        );
-    } catch (error) {
-        console.error("Error updating user skill set:", error);
-        throw error;
-    }
-}
+//         await User.findOneAndUpdate(
+//             { id: userId },
+//             {
+//                 skillSet: skillSet,
+//             },
+//             { upsert: true }
+//         );
+//     } catch (error) {
+//         console.error("Error updating user skill set:", error);
+//         throw error;
+//     }
+// }
 
 export async function fetchUserPosts(userId: string) {
     try {
@@ -146,6 +149,7 @@ export async function fetchUsers({
             query.$or = [
                 { username: { $regex: regex } },
                 { name: { $regex: regex } },
+                { bio: { $regex: regex } },
             ];
         }
 

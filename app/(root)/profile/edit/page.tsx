@@ -13,6 +13,18 @@ async function Page() {
     const userInfo = await fetchUser(user.id);
     if (!userInfo?.onboarded) redirect("/onboarding");
 
+    const skillSet = [];
+    // iterate over each element in userInfo.skillSet
+    for (let i = 0; i < userInfo?.skillSet.length; i++) {
+
+
+        skillSet.push({
+            skillName: userInfo?.skillSet[i].skillName,
+            credentials: userInfo?.skillSet[i].credentials
+        });
+    }
+
+    console.log("skillset = ", skillSet)
     const userData = {
         id: user.id,
         objectId: userInfo?._id,
@@ -20,6 +32,8 @@ async function Page() {
         name: userInfo ? userInfo?.name : user.firstName ?? "",
         bio: userInfo ? userInfo?.bio : "",
         image: userInfo ? userInfo?.image : user.imageUrl,
+        // skillSet: userInfo?.skillSet,
+
     };
 
     return (
@@ -28,7 +42,7 @@ async function Page() {
             <p className='mt-3 text-base-regular text-gray-700'>Make any changes</p>
 
             <section className='mt-12'>
-                <AccountProfile user={userData} btnTitle='Continue' />
+                <AccountProfile user={userData} btnTitle='Continue' userSkillSet={skillSet} />
             </section>
         </>
     );

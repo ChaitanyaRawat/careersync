@@ -8,8 +8,8 @@ import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 import { Button } from '../ui/button';
 import { updateUserSkillSet } from '@/lib/actions/user.actions';
-import { Accordion, AccordionContent, AccordionTrigger } from '../ui/accordion';
-import { AccordionItem } from '@radix-ui/react-accordion';
+import { Accordion, AccordionContent, AccordionTrigger, AccordionItem } from '../ui/accordion';
+
 
 export interface skill {
     skillName: string;
@@ -26,37 +26,31 @@ const SkillNameValidation = z.object({
 
 
 const SkillForm = ({ userId, skillSet }: { userId: string, skillSet: skill[] }) => {
+
+    // console.log("efjcmernjejenwjenhebwcewew37197189e1120812129")
     const form = useForm<z.infer<typeof SkillNameValidation>>({
         resolver: zodResolver(SkillNameValidation),
         defaultValues: {
             name: '',
         },
     });
-    const [skills, setSkills] = useState(skillSet);
+    const [skills, setSkills] = useState<skill[]>(skillSet);
     const [inputCredentialName, setInputCredentialName] = useState<string>("");
     const [disabledButtons, setDisabledButtons] = useState<boolean>(false)
-    
+
 
 
     const [credentialArray, setCredentialArray] = useState<string[]>([])
     useEffect(() => {
-      console.log("skills = ", skills);
-      form.reset()
+        setDisabledButtons(true);
+        console.log("skills = ", skills);
+        // form.reset()
         setCredentialArray([]);
         setDisabledButtons(false)
     }, [skills])
-    
 
-    const checkPresence = (s: string) => {
-        // iterate each element of skillset
-        for (let i = 0; i < skills.length; i++) {
-            // check if skill is already in skillset
-            if (skills[i].skillName === s) {
-                return true;
-            }
-        }
-        return false;
-    }
+
+
 
 
     const addCredential = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -80,54 +74,52 @@ const SkillForm = ({ userId, skillSet }: { userId: string, skillSet: skill[] }) 
     };
 
     const addToSkillState = ({ skillName, credentials }: { skillName: string, credentials: string[] }) => {
-        setDisabledButtons(true);
-
         setSkills([...skills, { skillName, credentials }]);
-        setDisabledButtons(true);
-
-        
         // add delay
-        
-        
     };
 
     const removeFromSkillState = (skillName: string) => {
-        setDisabledButtons(true);
-
-
         setSkills(skills.filter((skill) => skill.skillName !== skillName));
     };
 
 
     const onSubmit = async (values: z.infer<typeof SkillNameValidation>) => {
-        console.log("skills = ", skills);
+        console.log("skills given = ", skills);
         setDisabledButtons(true);
+        // await updateUserSkillSet({ userId: userId, skillSet: skills });
         // await updateUserSkillSet({
 
         // });
         // console.log("skillname = ", values.name);
         // console.log("credentialArray = ", credentialArray);
         form.reset();
+        setInputCredentialName('');
+        setDisabledButtons(false);
     };
 
     return (
+
+
         <>
 
             {skills.length > 0 && (
-                <Accordion type="single" collapsible className="w-full bg-white rounded-lg p-2 ">
 
+                <Accordion type="single" collapsible className="w-full  rounded-lg p-2 ">
                     {skills.map((skill) => (
-                        <AccordionItem value={'item-1'} key={skill.skillName}>
-                            <AccordionTrigger className="text-black">{skill.skillName}</AccordionTrigger>
+                        <AccordionItem value={'list of skills'} key={skill.skillName} className='my-2 border-1 border-black bg-white rounded-lg p-2 w-full'>
+                            <div className='w-full flex justify-between '>
+                                <AccordionTrigger className="text-black">{skill.skillName}</AccordionTrigger>
+                                <button className='bg-red-500 text-white p-2 rounded-lg' onClick={() => removeFromSkillState(skill.skillName)} >Delete</button>
+                            </div>
 
-                            <AccordionContent className='pt-3 overflow-scroll'>
+                            <AccordionContent className='pt-3 overflow-y-scroll flex flex-col gap-2'>
                                 {
                                     skill.credentials.map((credential: string) => (
                                         <a
                                             href={credential}
                                             key={credential}
                                             target="_blank"
-                                            className="px-2 mx-1 py-1 rounded  text-primary-500 hover:bg-light-2 border border-black"
+                                            className="px-2 mx-1 py-1 rounded  text-primary-500 hover:bg-light-2 border border-black overflow-y-scroll"
                                         >
                                             {credential}
                                         </a>
@@ -138,7 +130,8 @@ const SkillForm = ({ userId, skillSet }: { userId: string, skillSet: skill[] }) 
                         </AccordionItem>
                     ))}
                 </Accordion>
-            )}
+            )
+            }
 
 
 
@@ -167,7 +160,7 @@ const SkillForm = ({ userId, skillSet }: { userId: string, skillSet: skill[] }) 
                                         <Input
                                             type='text'
                                             className='account-form_input no-focus'
-                                            
+
                                             {...field}
                                         />
                                     </FormControl>
@@ -187,17 +180,17 @@ const SkillForm = ({ userId, skillSet }: { userId: string, skillSet: skill[] }) 
                         />
                         <div className="flex flex-wrap">
                             {credentialArray.map((curr, index) => (
-                                <div key={index} className="flex items-center bg-gray-200 text-gray-800 text-sm font-medium mr-2 mb-2 px-2 py-1 rounded">
+                                <div key={index} className="flex items-center bg-gray-200 text-gray-800 text-sm font-medium mr-2 mb-2 px-2 py-1 rounded overflow-y-scroll">
                                     {curr}
                                     <span onClick={() => removeCredential(curr)} className="ml-2 cursor-pointer text-red-500">x</span>
                                 </div>
                             ))}
                         </div>
-                        <Button className='bg-primary-500' onClick={() => addToSkillState({ skillName: (form.getValues('name')), credentials: credentialArray })}>
+                        <Button disabled={disabledButtons} className='bg-primary-500' onClick={() => addToSkillState({ skillName: (form.getValues('name')), credentials: credentialArray })}>
                             Add
                         </Button>
 
-                        <Button type='submit' className='bg-primary-500'>
+                        <Button disabled={disabledButtons} type='submit' className='bg-primary-500'>
                             save
                         </Button>
                     </form>
@@ -207,7 +200,12 @@ const SkillForm = ({ userId, skillSet }: { userId: string, skillSet: skill[] }) 
                 {/* <p className={`text-red-500 ${validTag ? 'hidden' : 'block'}`}>please enter a valid tag</p> */}
             </div>
         </>
+
     );
 };
 
 export default SkillForm;
+
+
+
+
