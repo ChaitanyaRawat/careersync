@@ -106,7 +106,13 @@ export async function fetchUserPosts(userId: string) {
                         model: User,
                         select: "name image id", // Select the "name" and "_id" fields from the "User" model
                     },
+                    
                 },
+                {
+                    path: "likedBy",
+                    model: User,
+                    select: "name image id"
+                }
             ],
         });
         return threads;
@@ -123,12 +129,14 @@ export async function fetchUsers({
     pageNumber = 1,
     pageSize = 20,
     sortBy = "desc",
+    searchedSkills = [],
 }: {
     userId: string;
     searchString?: string;
     pageNumber?: number;
     pageSize?: number;
     sortBy?: SortOrder;
+    searchedSkills?: string[] | undefined;
 }) {
     try {
         connectToDB();
@@ -144,14 +152,46 @@ export async function fetchUsers({
             id: { $ne: userId }, // Exclude the current user from the results.
         };
 
+
+
+
+
         // If the search string is not empty, add the $or operator to match either username or name fields.
         if (searchString.trim() !== "") {
+
             query.$or = [
                 { username: { $regex: regex } },
                 { name: { $regex: regex } },
                 { bio: { $regex: regex } },
+
             ];
         }
+
+        if (searchedSkills.length > 0 && searchedSkills[0] !== "") {
+            query.$and = searchedSkills.map(skill => ({
+                skillSet: {
+                    $elemMatch: {
+                        skillName: { $regex: new RegExp(skill.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i') }  // Replace special characters with their escaped equivalents
+                    }
+                }
+            }))
+
+        }
+
+        // these are the characeters that need to be escaped in regex
+        // . (dot): Matches any single character except newline.
+        // * (asterisk): Matches zero or more of the preceding element.
+        // + (plus): Matches one or more of the preceding element.
+        // ? (question mark): Matches zero or one of the preceding element.
+        // ^ (caret): Matches the beginning of the string.
+        // $ (dollar sign): Matches the end of the string.
+        // { and } (curly braces): Define a quantifier for the preceding element.
+        // ( and ) (parentheses): Define a group or capture a match.
+        // | (pipe): Acts as an OR operator.
+        // [ and ] (square brackets): Define a character class.
+        // \ (backslash): Escapes the next character, making it literal.
+
+
 
         // Define the sort options for the fetched users based on createdAt field and provided sort order.
         const sortOptions = { createdAt: sortBy };
@@ -176,7 +216,7 @@ export async function fetchUsers({
     }
 }
 
-export async function getActivity(userId: string) {
+export async function getCommentActivity(userId: string) {
     try {
         connectToDB();
 
@@ -199,6 +239,29 @@ export async function getActivity(userId: string) {
         });
 
         return replies;
+    } catch (error) {
+        console.error("Error fetching replies: ", error);
+        throw error;
+    }
+}
+
+
+
+export async function getLikeActivity(userId: string) {
+    try {
+        connectToDB();
+
+        // Find all threads created by the user
+        const userThreads = await Thread.find({ author: userId }).populate({
+            path: "likedBy",
+            model: User,
+            select: "name image id",
+        });
+
+        // Collect all the child thread ids (replies) from the 'children' field of each user thread
+
+
+        return userThreads;
     } catch (error) {
         console.error("Error fetching replies: ", error);
         throw error;

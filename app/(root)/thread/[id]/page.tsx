@@ -35,6 +35,7 @@ async function page({ params }: { params: { id: string } }) {
                     tags={thread.tags}
                     urls={thread.urls}
                     attachment={thread.attachment}
+                    likedBy={thread.likedBy}
                 />
             </div>
 
@@ -62,6 +63,7 @@ async function page({ params }: { params: { id: string } }) {
                         urls={childItem.urls}
                         attachment={childItem.attachment}
                         isComment
+                        likedBy={childItem.likedBy}
                     />
                 ))}
             </div>

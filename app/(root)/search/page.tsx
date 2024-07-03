@@ -18,28 +18,23 @@ async function Page({
 
   const userInfo = await fetchUser(user.id);
   if (!userInfo?.onboarded) redirect("/onboarding");
+  
+  const searchedSkills = searchParams?.s?.split(",").map(decodeURIComponent)
+  console.log("searchedSkills = ", searchedSkills)
 
   const result = await fetchUsers({
     userId: user.id,
     searchString: searchParams.q,
     pageNumber: searchParams?.page ? +searchParams.page : 1,
     pageSize: 25,
+    searchedSkills: searchedSkills
   });
 
   return (
     <>
       <section>
         <h1 className='head-text mb-10'>Search</h1>
-        <Select>
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Seacrh By" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="light">Name/Username</SelectItem>
-            <SelectItem value="dark">Bio</SelectItem>
-            <SelectItem value="system">Skills</SelectItem>
-          </SelectContent>
-        </Select>
+        
 
         <Searchbar routeType='search' />
 

@@ -24,7 +24,7 @@ async function Page() {
         });
     }
 
-    console.log("skillset = ", skillSet)
+    // console.log("skillset = ", skillSet)
     const userData = {
         id: user.id,
         objectId: userInfo?._id,

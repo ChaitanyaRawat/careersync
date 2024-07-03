@@ -32,6 +32,11 @@ interface Result {
         tags: string[];
         urls: string[];
         attachment: string | null | undefined;
+        likedBy:{
+            id: string;
+            name: string;
+            image: string;
+        }[]
     }[];
 }
 
@@ -49,6 +54,8 @@ async function ThreadsTab({ currentUserId, accountId, accountType }: Props) {
     } else {
         result = await fetchUserPosts(accountId);
     }
+
+    // console.log("result threads = ", (result));
 
     if (!result) {
         redirect("/");
@@ -82,6 +89,7 @@ async function ThreadsTab({ currentUserId, accountId, accountType }: Props) {
                     tags={thread.tags}
                     urls={thread.urls}
                     attachment={thread.attachment}
+                    likedBy={thread.likedBy}
                 />
             ))}
         </section>

@@ -36,6 +36,10 @@ export async function fetchPosts(pageNumber = 1, pageSize = 20) {
                 model: User,
                 select: "_id name parentId image", // Select only _id and username fields of the author
             },
+        }).populate({
+            path: "likedBy",
+            model: User,
+            select: "id name image",
         });
 
     // Count the total number of top-level posts (threads) i.e., threads that are not comments.
@@ -205,7 +209,17 @@ export async function fetchThreadById(threadId: string) {
                             select: "_id id name parentId image", // Select only _id and username fields of the author
                         },
                     },
+                    {
+                        path: "likedBy", // Populate the likedBy field within children
+                        model: User,
+                        select: "id name image", // Select only _id and username fields of the likedBy
+                    }
                 ],
+            })
+            .populate({
+                path: "likedBy",
+                model: User,
+                select: "id name image",
             })
             .exec();
 
@@ -284,7 +298,7 @@ export async function deleteLike(threadId: string, currentUserId: string, path: 
         }
         // await User.updateOne({ _id: currentUserId }, { $pull: { likedPosts: threadId } });
         await thread.updateOne({ $pull: { likedBy: currentUserInfo._id } });
-        
+
         revalidatePath(path);
     } catch (err) {
         console.error("Error while deleting like:", err);

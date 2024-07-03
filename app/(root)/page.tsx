@@ -47,6 +47,7 @@ async function Home({
                 tags={post.tags}
                 urls={post.urls}
                 attachment={post.attachment}
+                likedBy={ post.likedBy }
               />
             ))}
           </>

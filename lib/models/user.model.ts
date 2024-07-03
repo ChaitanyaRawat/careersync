@@ -32,12 +32,12 @@ const userSchema = new mongoose.Schema({
             ref: "Community",
         },
     ],
-    likedPosts: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Thread",
-        },
-    ],
+    // likedPosts: [
+    //     {
+    //         type: mongoose.Schema.Types.ObjectId,
+    //         ref: "Thread",
+    //     },
+    // ],
     skillSet: [
         {
             skillName: {

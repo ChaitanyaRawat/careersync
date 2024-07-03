@@ -38,6 +38,11 @@ interface Props {
     tags: string[];
     urls: string[];
     attachment: string | null | undefined;
+    likedBy:{
+        id: string;
+        name: string;
+        image: string;
+    }[]
 }
 
 async function ThreadCard({
@@ -53,9 +58,10 @@ async function ThreadCard({
     tags,
     urls,
     attachment,
+    likedBy
 }: Props) {
     const isLiked = await isLikedByUser(id, currentUserId)
-
+    console.log("likedby = ", likedBy)
     return (
         <article
             className={`flex w-full flex-col bg-white   ${isComment ? "px-0 xs:px-7 my-4  py-4" : "p-7 rounded-xl"
@@ -300,6 +306,30 @@ async function ThreadCard({
                     </Link>
                 </div>
             )}
+
+
+            {
+                !isComment && likedBy && likedBy.length > 0 && (
+                    <div className='ml-1 mt-6 flex items-center gap-2'>
+                        {likedBy.slice(0, 2).map((user, index) => (
+                            <Image
+                                key={index}
+                                src={user.image}
+                                alt={`user_${index}`}
+                                width={24}
+                                height={24}
+                                className={`${index !== 0 && "-ml-5"} rounded-full object-cover`}
+                            />
+                        ))}
+
+                        <Link href={`/thread/${id}/likes`}>
+                            <p className='mt-1 text-subtle-medium text-gray-1'>
+                                {likedBy.length} like{likedBy.length > 1 ? "s" : ""}
+                            </p>
+                        </Link>
+                    </div>
+                )
+            }
 
 
             {isComment && comments.length > 0 && (
