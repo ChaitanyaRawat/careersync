@@ -71,22 +71,27 @@ function Searchbar({ routeType }: Props) {
                     className='no-focus searchbar_input'
                 />
             </div>
-            <input
-                type="text"
-                value={inputSkillName}
-                onChange={(e) => setInputSkillName(e.target.value)}
-                onKeyDown={addSkill}
-                placeholder="Enter Skills you seek"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md my-2"
-            />
-            <div className="flex flex-wrap">
-                {skillArray.map((curr, index) => (
-                    <div key={index} className="flex items-center bg-gray-200 text-gray-800 text-sm font-medium mr-2 mb-2 px-2 py-1 rounded overflow-y-scroll">
-                        {curr}
-                        <span onClick={() => removeSkill(curr)} className="ml-2 cursor-pointer text-red-500">x</span>
+            {routeType !== "communities" && (
+                <>
+                    <input
+                        type="text"
+                        value={inputSkillName}
+                        onChange={(e) => setInputSkillName(e.target.value)}
+                        onKeyDown={addSkill}
+                        placeholder="Enter Skills you seek"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md my-2"
+                    />
+                    <div className="flex flex-wrap">
+                        {skillArray.map((curr, index) => (
+                            <div key={index} className="flex items-center bg-gray-200 text-gray-800 text-sm font-medium mr-2 mb-2 px-2 py-1 rounded overflow-y-scroll">
+                                {curr}
+                                <span onClick={() => removeSkill(curr)} className="ml-2 cursor-pointer text-red-500">x</span>
+                            </div>
+                        ))}
                     </div>
-                ))}
-            </div>
+                </>
+            )
+            }
         </>
     );
 }

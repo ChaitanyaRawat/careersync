@@ -43,7 +43,7 @@ const SkillForm = ({ userId, skillSet }: { userId: string, skillSet: skill[] }) 
     const [credentialArray, setCredentialArray] = useState<string[]>([])
     useEffect(() => {
         setDisabledButtons(true);
-        console.log("skills = ", skills);
+        // console.log("skills = ", skills);
         // form.reset()
         setCredentialArray([]);
         setDisabledButtons(false)
@@ -84,7 +84,7 @@ const SkillForm = ({ userId, skillSet }: { userId: string, skillSet: skill[] }) 
 
 
     const onSubmit = async (values: z.infer<typeof SkillNameValidation>) => {
-        console.log("skills given = ", skills);
+        // console.log("skills given = ", skills);
         setDisabledButtons(true);
         // await updateUserSkillSet({ userId: userId, skillSet: skills });
         // await updateUserSkillSet({

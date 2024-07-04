@@ -1,12 +1,13 @@
 "use server";
 
-import { FilterQuery, SortOrder } from "mongoose";
+import mongoose, { FilterQuery, SortOrder } from "mongoose";
 
 import Community from "../models/community.model";
 import Thread from "../models/thread.model";
 import User from "../models/user.model";
-
+import JobOpening from "../models/jobOpening.model";
 import { connectToDB } from "../mongoose";
+import { UTApi } from "uploadthing/server";
 
 export async function createCommunity(
     id: string,
@@ -307,3 +308,78 @@ export async function deleteCommunity(communityId: string) {
         throw error;
     }
 }
+
+
+
+export async function createJobOpening(
+    { orgId, creatorId, title, description, demandedSkills, attachment, urls }
+        : {
+            orgId: string,
+            creatorId: string,
+            title: string,
+            description: string,
+            demandedSkills: string[],
+            attachment: string,
+            urls: string[],
+        }) {
+
+    try {
+        connectToDB();
+        await JobOpening.create({
+            organisationId: orgId,
+            createdBy: new mongoose.Types.ObjectId(creatorId),
+            title: title,
+            description: description,
+            demandedSkills: demandedSkills,
+            attachment: attachment,
+            urls: urls
+        });
+        console.log("create job opening sucessfully");
+
+    } catch (error: any) {
+        console.error("Error creating job opening: ", error);
+        throw error;
+    }
+}
+
+export async function fetchJobOpeningOfOrganisation(orgId: string) {
+    try {
+        connectToDB();
+        const jobOpening = await JobOpening.find({ organisationId: orgId }).populate("createdBy", "name image id");
+
+        return jobOpening;
+    } catch (error) {
+        console.error("Error fetching job opening: ", error);
+        throw error;
+    }
+}
+
+export async function deleteJobOpening(oid: string):Promise<void> {
+    try {
+        connectToDB();
+        const utapi = new UTApi();
+      
+        console.log("oid = ", oid);
+
+      
+        const jobOpening: any = await JobOpening.findById(oid);
+
+        if (!jobOpening) {
+            throw new Error("Job opening not found");
+        }
+
+        if (jobOpening.attachment) {
+            const fileId = jobOpening.attachment.substring(18);
+            // console.log("fileId = ", fileId);
+
+            await utapi.deleteFiles(fileId);
+        }
+
+        await JobOpening.deleteOne({_id:oid});
+
+
+    } catch (error) {
+        console.error("Error fetching job opening: ", error);
+        throw error;
+    }
+} 

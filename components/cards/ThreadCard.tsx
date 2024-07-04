@@ -61,7 +61,7 @@ async function ThreadCard({
     likedBy
 }: Props) {
     const isLiked = await isLikedByUser(id, currentUserId)
-    console.log("likedby = ", likedBy)
+    // console.log("likedby = ", likedBy)
     return (
         <article
             className={`flex w-full flex-col bg-white   ${isComment ? "px-0 xs:px-7 my-4  py-4" : "p-7 rounded-xl"

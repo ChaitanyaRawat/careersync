@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { SignOutButton, SignedIn, useAuth } from "@clerk/nextjs";
+import { SignOutButton, SignedIn, useAuth, useOrganization } from "@clerk/nextjs";
 import Script from "next/script";
 
 import { sidebarLinks } from "@/constants";
@@ -11,7 +11,7 @@ import { sidebarLinks } from "@/constants";
 const LeftSidebar = () => {
     const router = useRouter();
     const pathname = usePathname();
-
+    
     const { userId } = useAuth();
 
     return (
@@ -37,18 +37,35 @@ const LeftSidebar = () => {
                                     alt={link.label}
                                     width={24}
                                     height={24}
-                                    className={`${!isActive &&"invert"}`}
+                                    className={`${!isActive && "invert"}`}
                                 />
-                                {/* <lord-icon
-                                    src="https://cdn.lordicon.com/hrjifpbq.json"
-                                    trigger="hover"
-                                    style="width:250px;height:250px">
-                                </lord-icon> */}
+
 
                                 <p className={`${isActive ? "text-white" : "text-black"} max-lg:hidden`} >{link.label}</p>
                             </Link>
                         );
                     })}
+
+                    {/* {organization && (
+                        <Link
+                            href={`createJobOpening/${organization.id}`}
+                            className={`leftsidebar_link ${pathname.includes("/createJobOpening") && "bg-primary-500"}`}
+                        >
+                            <Image
+                                src="/assets/skills.svg"
+                                alt={"createJobOpening"}
+                                width={24}
+                                height={24}
+                                className={`${!pathname.includes("/createJobOpening") && "invert"}`}
+                            />
+
+
+                            <p className={`${pathname.includes("/createJobOpening") ? "text-white" : "text-black"} max-lg:hidden`} >Create Job Opening</p>
+                        </Link>
+                    )
+                    } */}
+
+
                 </div>
 
                 <div className='mt-10 px-6'>

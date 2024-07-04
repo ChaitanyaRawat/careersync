@@ -123,7 +123,7 @@ export async function deleteThread(id: string, path: string): Promise<void> {
         const mainThread = await Thread.findById(id).populate("author community");
         if (mainThread.attachment) {
             const fileId = mainThread.attachment.substring(18);
-            console.log("fileId = ", fileId);
+            // console.log("fileId = ", fileId);
 
             await utapi.deleteFiles(fileId);
         }
@@ -279,7 +279,7 @@ export async function addLike(threadId: string, currentUserId: string, path: str
         }
         // await User.updateOne({ _id: currentUserId }, { $addToSet: { likedPosts: threadId } });
         await thread.updateOne({ $addToSet: { likedBy: currentUserInfo._id } });
-        console.log("Added like to thread:", threadId);
+        // console.log("Added like to thread:", threadId);
         revalidatePath(path);
     } catch (err) {
         console.error("Error while adding like:", err);

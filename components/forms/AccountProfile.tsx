@@ -90,7 +90,7 @@ const AccountProfile = ({ user, btnTitle, userSkillSet }: Props) => {
 
     useEffect(() => {
         setDisabledButtons(true);
-        console.log("skills = ", skills);
+        // console.log("skills = ", skills);
         // form.reset()
         setCredentialArray([]);
         setDisabledButtons(false)
@@ -137,7 +137,7 @@ const AccountProfile = ({ user, btnTitle, userSkillSet }: Props) => {
 
 
     const onSubmit = async (values: z.infer<typeof UserValidation>) => {
-        console.log("skills given = ", skills);
+        // console.log("skills given = ", skills);
         setDisabledButtons(true);
 
         const blob = values.profile_photo;

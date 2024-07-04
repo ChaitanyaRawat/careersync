@@ -55,7 +55,7 @@ async function ThreadsTab({ currentUserId, accountId, accountType }: Props) {
         result = await fetchUserPosts(accountId);
     }
 
-    // console.log("result threads = ", (result));
+    // console.log("result threads = ", (result.threads));
 
     if (!result) {
         redirect("/");

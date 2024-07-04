@@ -14,7 +14,7 @@ async function Page() {
 
   const commentActivity = await getCommentActivity(userInfo._id);
   const likeActivity = await getLikeActivity(userInfo._id);
-  console.log("like activity = ", likeActivity);
+  // console.log("like activity = ", likeActivity);
 
   return (
     <>
