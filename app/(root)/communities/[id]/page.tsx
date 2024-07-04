@@ -117,6 +117,7 @@ async function Page({ params }: { params: { id: string } }) {
                                         demandedSkills={jobOpening.demandedSkills || []}
                                         attachment={jobOpening.attachment || ""}
                                         urls={jobOpening.urls || []}
+                                        showBtn={true}
                                     />
                                 </div>
                             )})

@@ -31,6 +31,20 @@ export const ourFileRouter = {
       return { uploadedBy: metadata.userId };
     }),
 
+  docMedia: f({ pdf: { maxFileSize: "4MB", maxFileCount: 1 } })
+    .middleware(async ({ req }) => {
+
+      const user = await getUser()
+      if (!user) throw new UploadThingError("Unauthorized");
+      return { userId: user.id };
+    }).onUploadComplete(async ({ metadata, file }) => {
+
+      console.log("Upload complete for userId:", metadata.userId);
+      console.log("file url", file.url);
+
+      return { uploadedBy: metadata.userId };
+    })
+
 
 
 
@@ -38,3 +52,7 @@ export const ourFileRouter = {
 } satisfies FileRouter;
 
 export type OurFileRouter = typeof ourFileRouter;
+
+
+
+// type ValidFileTypes = "image" | "video" | "audio" | "blob" | "pdf" | "text" | MimeType;

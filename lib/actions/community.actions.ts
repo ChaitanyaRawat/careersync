@@ -354,14 +354,16 @@ export async function fetchJobOpeningOfOrganisation(orgId: string) {
     }
 }
 
-export async function deleteJobOpening(oid: string):Promise<void> {
+
+
+export async function deleteJobOpening(oid: string): Promise<void> {
     try {
         connectToDB();
         const utapi = new UTApi();
-      
+
         console.log("oid = ", oid);
 
-      
+
         const jobOpening: any = await JobOpening.findById(oid);
 
         if (!jobOpening) {
@@ -375,11 +377,77 @@ export async function deleteJobOpening(oid: string):Promise<void> {
             await utapi.deleteFiles(fileId);
         }
 
-        await JobOpening.deleteOne({_id:oid});
+        await JobOpening.deleteOne({ _id: oid });
 
 
     } catch (error) {
         console.error("Error fetching job opening: ", error);
         throw error;
     }
-} 
+}
+
+export async function fetchJobOpeningById(oid: string) {
+    try {
+        connectToDB();
+        const jobOpening = await JobOpening.findById(oid)
+
+        return jobOpening
+    } catch (error) {
+        console.error("Error fetching job opening: ", error);
+        throw error;
+    }
+}
+
+export async function addApplication({ oid, userOid, resume }: { oid: string, userOid: string, resume: string }) {
+    try {
+        connectToDB();
+        const jobOpening: any = await JobOpening.findById(oid);
+
+        jobOpening.applicationsRecieved.push({ candidate: userOid, resume: resume });
+        await jobOpening.save();
+
+
+    } catch (error: any) {
+        console.error("Error adding application: ", error);
+        throw error;
+    }
+}
+
+export async function userHasAppliedForJobOpening({ userId, oid }: { userId: string, oid: string }) {
+    try {
+        connectToDB();
+        const jobOpening: any = await JobOpening.findById(oid);
+        for(const application of jobOpening.applicationsRecieved){
+            if(application.candidate.toString() == userId){
+                return {status: true, application: application}
+            }
+        }
+      return {status: false, application: null}
+
+
+    } catch (error: any) {
+        console.error("Error checking if the user applied: ", error);
+    }
+}
+
+export async function revokeApplication({ oid, userOid }: { oid: string, userOid: string }) {
+    try {
+        connectToDB();
+        const utapi = new UTApi();
+        const jobOpening: any = await JobOpening.findById(oid);
+        const application = await jobOpening.applicationsRecieved.find((application: any) => application.candidate.toString() === userOid);
+        console.log("application = ", application);
+        await jobOpening.applicationsRecieved.pull({ candidate: userOid });
+        if (application.resume) {
+            const fileId = application.resume.substring(18);
+            // console.log("fileId = ", fileId);
+
+            await utapi.deleteFiles(fileId);
+        }
+        await jobOpening.save();
+
+    } catch (error: any) {
+        console.error("Error revoking application: ", error);
+        throw error;
+    }
+}

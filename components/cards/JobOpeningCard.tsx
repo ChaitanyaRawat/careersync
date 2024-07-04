@@ -30,9 +30,10 @@ interface Props {
     demandedSkills: string[],
     attachment: string,
     urls: string[],
+    showBtn: boolean
 }
 
-function ThreadCard({
+function JobOpeningCard({
     oid,
     orgId,
     orgName,
@@ -46,6 +47,7 @@ function ThreadCard({
     demandedSkills,
     attachment,
     urls,
+    showBtn
 }: Props) {
 
 
@@ -191,9 +193,14 @@ function ThreadCard({
 
             {/* add a button to apply for job */}
 
-            <Button className='bg-primary-500 mt-5'>
-                Apply
-            </Button>
+            {showBtn && (
+                <Link
+                    href={`/communities/${orgId}/apply/${oid}`}
+                    className='bg-primary-500 mt-5 text-white p-2 font-bold text-center rounded-lg hover:bg-black'>
+                    Apply
+                </Link>
+            )
+            }
 
 
 
@@ -204,4 +211,4 @@ function ThreadCard({
     );
 }
 
-export default ThreadCard;
+export default JobOpeningCard;
