@@ -417,12 +417,12 @@ export async function userHasAppliedForJobOpening({ userId, oid }: { userId: str
     try {
         connectToDB();
         const jobOpening: any = await JobOpening.findById(oid);
-        for(const application of jobOpening.applicationsRecieved){
-            if(application.candidate.toString() == userId){
-                return {status: true, application: application}
+        for (const application of jobOpening.applicationsRecieved) {
+            if (application.candidate.toString() == userId) {
+                return { status: true, application: application }
             }
         }
-      return {status: false, application: null}
+        return { status: false, application: null }
 
 
     } catch (error: any) {
@@ -451,3 +451,46 @@ export async function revokeApplication({ oid, userOid }: { oid: string, userOid
         throw error;
     }
 }
+
+export async function fetchApplicationsForJobOpening(oid: string) {
+    try {
+        connectToDB();
+        const jobOpening: any = await JobOpening.findById(oid).populate("applicationsRecieved.candidate", "name image id accepted");
+        // console.log("jobOpening = ", jobOpening);
+        return jobOpening.applicationsRecieved;
+    } catch (error: any) {
+        console.error("Error fetching applications: ", error);
+        throw error;
+    }
+}
+
+export async function acceptApplication({ oid, userOid }: { oid: string, userOid: string }) {
+    try {
+        connectToDB();
+        console.log("oid = ", oid);
+        console.log("userOid = ", userOid);
+        await JobOpening.updateOne({ _id: oid, "applicationsRecieved.candidate": userOid }, { $set: { "applicationsRecieved.$.accepted": true } });
+
+
+
+    } catch (error: any) {
+        console.error("Error accepting application: ", error);
+        throw error;
+    }
+}
+
+// reject
+export async function rejectApplication({ oid, userOid }: { oid: string, userOid: string }) {
+    try {
+        connectToDB();
+        await JobOpening.updateOne({ _id: oid, "applicationsRecieved.candidate": userOid }, { $set: { "applicationsRecieved.$.accepted": false } });
+
+    } catch (error: any) {
+        console.error("Error rejecting application: ", error);
+        throw error;
+    }
+}
+
+
+
+

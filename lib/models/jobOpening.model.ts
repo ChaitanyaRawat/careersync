@@ -30,6 +30,10 @@ const jobOpeningSchema = new mongoose.Schema({
             },
             resume: {
                 type: String
+            },
+            accepted: {
+                type: Boolean,
+                default: false
             }
             
         }

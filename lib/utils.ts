@@ -41,3 +41,24 @@ export function formatThreadCount(count: number): string {
     return `${threadCount} ${threadWord}`;
   }
 }
+
+// download a pdf whose url is provided
+export async function downloadPDF({ fileUrl,fileName }: { fileUrl: string, fileName: string }) {
+  const res = await fetch(fileUrl);
+  const blob = await res.blob();
+  const file = new File([blob], `${fileName}.pdf`, { type: "application/pdf" });
+  const url = URL.createObjectURL(file);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `${fileName}.pdf`;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}
+
+
+
+
+
+

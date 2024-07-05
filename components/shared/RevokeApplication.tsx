@@ -16,6 +16,8 @@ const RevokeApplication = ({ params, userInfo, hasApplied }: { params: any, user
         <div className={`max-w-[100%] h-[600px] flex flex-col justify-center items-center my-4 bg-white rounded-lg p-4 gap-2`}>
             <p className="text-green-500">You have already applied to this job opening.</p>
             <iframe src={jHasApplied.application.resume} width="100%" className={`max-w-[80%] h-full `} />
+            <p className='font-bold'>Status: <span className={`${jHasApplied.application.accepted ? "text-green-500" : "text-primary-500"}`}>{jHasApplied.application.accepted ? "Accepted" : "Pending"}</span></p>
+            { jHasApplied.application.accepted && <p className='font-bold'>You will be contacted soon by the employers</p>}
             <Button
                 className="bg-red-600 text-white font-bold"
                 onClick={async () => {

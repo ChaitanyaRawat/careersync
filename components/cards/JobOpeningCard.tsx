@@ -14,6 +14,7 @@ import { isLikedByUser } from "@/lib/actions/thread.actions";
 import { Button } from "../ui/button";
 import DeleteJobOpening from "../shared/DeleteJobOpening";
 import mongoose from "mongoose";
+import CheckApplicationsBtn from "../shared/CheckApplicationsBtn";
 
 
 interface Props {
@@ -201,6 +202,7 @@ function JobOpeningCard({
                 </Link>
             )
             }
+            <CheckApplicationsBtn orgId={orgId} oid={oid} />
 
 
 

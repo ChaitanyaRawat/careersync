@@ -21,7 +21,7 @@ const page = async ({ params }: { params: { oid: string, id: string } }) => {
     const hasApplied = await userHasAppliedForJobOpening({ userId: userInfo._id, oid: params.oid });
     // console.log("jobOpening = ", jobOpening);
     // console.log("communityDetails = ", communityDetails);
-    console.log("hasApplied = ", hasApplied);
+    // console.log("hasApplied = ", hasApplied);
     return (
         <>
             <h1 className="head-text mb-4">Apply to <span className="text-primary-500">{communityDetails.name}</span></h1>
@@ -45,8 +45,10 @@ const page = async ({ params }: { params: { oid: string, id: string } }) => {
                 !hasApplied?.status
                     ? (<JobApplicationForm orgId={params.id} oid={params.oid} userOid={JSON.stringify(userInfo._id)} />)
                     : (
-                        
-                      <RevokeApplication params={JSON.stringify(params)} userInfo={JSON.stringify(userInfo)} hasApplied={JSON.stringify(hasApplied)}  />
+                        <>
+                            
+                            <RevokeApplication params={JSON.stringify(params)} userInfo={JSON.stringify(userInfo)} hasApplied={JSON.stringify(hasApplied)} />
+                        </>
                     )
             }
         </>
