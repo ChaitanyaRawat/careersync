@@ -32,12 +32,7 @@ const userSchema = new mongoose.Schema({
             ref: "Community",
         },
     ],
-    // likedPosts: [
-    //     {
-    //         type: mongoose.Schema.Types.ObjectId,
-    //         ref: "Thread",
-    //     },
-    // ],
+   
     skillSet: [
         {
             skillName: {
@@ -55,7 +50,13 @@ const userSchema = new mongoose.Schema({
             issuingAuthority: { type: String, required: true },
             image: { type: String, required: true },
         }
-    ]
+    ],
+    contactInfo:{
+        email: String,
+        phone: String,
+        whatsapp: String,
+        github: String,
+    }
 
     // experiences: [
     //     {
@@ -71,6 +72,8 @@ const userSchema = new mongoose.Schema({
     //         credentials: [String],
     //     },
     // ],
+
+
 });
 
 const User = mongoose.models.User || mongoose.model("User", userSchema);

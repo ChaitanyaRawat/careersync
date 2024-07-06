@@ -34,6 +34,12 @@ interface Params {
     path: string;
     skillSet: skill[];
     qualifications: qualification[];
+    contactInfo: {
+        email: string;
+        phone: string;
+        whatsapp: string;
+        github: string;
+    };
 }
 
 export async function updateUser({
@@ -45,6 +51,7 @@ export async function updateUser({
     image,
     skillSet,
     qualifications,
+    contactInfo
 }: Params): Promise<void> {
     try {
         connectToDB();
@@ -59,6 +66,7 @@ export async function updateUser({
                 onboarded: true,
                 skillSet: skillSet,
                 qualifications: qualifications,
+                contactInfo: contactInfo
             },
             { upsert: true }
         );

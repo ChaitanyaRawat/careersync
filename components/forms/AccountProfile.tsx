@@ -63,10 +63,17 @@ interface Props {
     btnTitle: string;
     userSkillSet?: skill[];
     qualifications: qualification[]
+    contactInfo: {
+        email: string;
+        phone: string;
+        whatsapp: string;
+        github: string;
+
+    }
 }
 
 
-const AccountProfile = ({ user, btnTitle, userSkillSet, qualifications }: Props) => {
+const AccountProfile = ({ user, btnTitle, userSkillSet, qualifications, contactInfo }: Props) => {
 
 
     const userId: string = user.id;
@@ -97,6 +104,11 @@ const AccountProfile = ({ user, btnTitle, userSkillSet, qualifications }: Props)
 
 
 
+    // contact related
+    const [emailInput, setEmailInput] = useState<string>(contactInfo?.email || "")
+    const [phoneInput, setPhoneInput] = useState<string>(contactInfo?.phone || "")
+    const [whatsappInput, setWhatsappInput] = useState<string>(contactInfo?.whatsapp || "")
+    const [githubInput, setGithubInput] = useState<string>(contactInfo?.github || "")
 
 
 
@@ -204,7 +216,13 @@ const AccountProfile = ({ user, btnTitle, userSkillSet, qualifications }: Props)
             bio: values.bio,
             image: values.profile_photo,
             skillSet: skills,
-            qualifications: qualificationsArray
+            qualifications: qualificationsArray,
+            contactInfo: {
+                email: emailInput,
+                phone: phoneInput,
+                whatsapp: whatsappInput,
+                github: githubInput
+            }
         });
 
         form.reset();
@@ -575,6 +593,95 @@ const AccountProfile = ({ user, btnTitle, userSkillSet, qualifications }: Props)
 
                         </>
                     )}
+
+
+                    {/* contact specification */}
+                    {pathname === "/profile/edit" && (
+                        <>
+                            <div className="w-full  rounded-lg p-2 ">
+
+
+                                <FormLabel className='text-base-semibold text-black'>Contact Info</FormLabel>
+
+
+
+                                <div className='p-4 overflow-y-scroll bg-white flex flex-col gap-6 h-min[300px] mt-4'>
+
+                                    <FormLabel className='text-base-semibold text-black'>
+                                        Email
+                                    </FormLabel>
+                                    <Input
+                                        type='text'
+                                        className='account-form_input no-focus'
+                                        value={emailInput}
+                                        onChange={(e) => {
+                                            setEmailInput(e.target.value)
+
+                                        }
+                                        }
+                                    />
+
+                                    <FormLabel className='text-base-semibold text-black'>
+                                        Phone Number
+                                    </FormLabel>
+                                    <Input
+                                        type='text'
+                                        className='account-form_input no-focus'
+                                        value={phoneInput}
+                                        onChange={(e) => {
+                                            setPhoneInput(e.target.value)
+
+                                        }
+                                        }
+                                    />
+
+
+                                    <FormLabel className='text-base-semibold text-black'>
+                                        Whatsapp
+                                    </FormLabel>
+                                    <Input
+                                        type='text'
+                                        className='account-form_input no-focus'
+                                        value={whatsappInput}
+                                        onChange={(e) => {
+                                            setWhatsappInput(e.target.value)
+
+                                        }
+                                        }
+                                    />
+
+                                    <FormLabel className='text-base-semibold text-black'>
+                                        Github
+                                    </FormLabel>
+                                    <Input
+                                        type='text'
+                                        className='account-form_input no-focus'
+                                        value={githubInput}
+                                        onChange={(e) => {
+                                            setGithubInput(e.target.value)
+
+                                        }
+                                        }
+                                    />
+
+
+
+
+                                </div>
+
+                            </div>
+
+
+
+
+
+
+
+
+                        </>
+                    )}
+
+
 
 
 

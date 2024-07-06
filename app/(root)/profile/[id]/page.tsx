@@ -19,7 +19,7 @@ async function Page({ params }: { params: { id: string } }) {
 
     const userInfo = await fetchUser(params.id);
     if (!userInfo?.onboarded) redirect("/onboarding");
-    // console.log("userInfo = ", userInfo);
+    console.log("userInfo = ", userInfo);
 
     const skillSet = [];
     // iterate over each element in userInfo.skillSet
@@ -98,14 +98,119 @@ async function Page({ params }: { params: { id: string } }) {
 
                     </TabsContent>
 
-                    
+
                     <TabsContent
                         value="qualifications"
                         className="w-full text-black"
                     >
-                        
-                        <QualificationTab   qualifications={userInfo?.qualifications} />
+
+                        <QualificationTab qualifications={userInfo?.qualifications} />
                     </TabsContent>
+
+                    <TabsContent
+                        value="experience"
+                        className="w-full text-black"
+                    >
+                        experiences
+
+                    </TabsContent>
+
+                    <TabsContent
+                        value="contactInfo"
+                        className="w-full text-black"
+                    >
+                        <div className='w-full flex flex-col p-2 gap-4 rounded-lg my-2'>
+
+                            {userInfo.contactInfo.email && userInfo.contactInfo.email !== "" &&
+
+                                <div className="flex flex-col md:flex-row w-full items-center gap-3 border-black bg-white p-3 rounded-lg ">
+                                    <div className='relative h-11 w-11'>
+                                        <Image
+                                            src="/assets/email.svg"
+                                            alt='email'
+                                            fill
+                                            className='cursor-pointer rounded-full'
+                                        />
+                                    </div>
+                                    <h2 className=' text-black text-heading3-bold'>
+                                        Email
+                                    </h2>
+                                    <a href={`mailto:${userInfo.contactInfo.email}`} target="_blank" className='text-base-medium text-blue'>
+                                        {userInfo.contactInfo.email}
+                                    </a>
+                                </div>
+                            }
+
+
+                            {userInfo.contactInfo.phone && userInfo.contactInfo.phone !== "" &&
+
+                                <div className="flex flex-col md:flex-row w-full items-center gap-3 border-black bg-white p-3 rounded-lg ">
+                                    <div className='relative h-11 w-11'>
+                                        <Image
+                                            src="/assets/phone.svg"
+                                            alt='email'
+                                            fill
+                                            className='cursor-pointer rounded-full'
+                                        />
+                                    </div>
+                                    <h2 className=' text-black text-heading3-bold'>
+                                        Phone
+                                    </h2>
+                                    <p className='text-base-medium text-gray-1'>
+                                        {userInfo.contactInfo.phone}
+                                    </p>
+                                </div>
+                            }
+
+                            {userInfo.contactInfo.whatsapp && userInfo.contactInfo.whatsapp !== "" &&
+
+                                <div className="flex flex-col md:flex-row w-full items-center gap-3 border-black bg-white p-3 rounded-lg ">
+                                    <div className='relative h-11 w-11'>
+                                        <Image
+                                            src="/assets/whatsapp.svg"
+                                            alt='email'
+                                            fill
+                                            className='cursor-pointer rounded-full'
+                                        />
+                                    </div>
+                                    <h2 className=' text-black text-heading3-bold'>
+                                        Whatsapp
+                                    </h2>
+                                    <p className='text-base-medium text-gray-1'>
+                                        {userInfo.contactInfo.whatsapp}
+                                    </p>
+                                </div>
+                            }
+
+                            {userInfo.contactInfo.github && userInfo.contactInfo.github !== "" &&
+
+                                <div className="flex flex-col md:flex-row w-full items-center gap-3 border-black bg-white p-3 rounded-lg ">
+                                    <div className='relative h-11 w-11'>
+                                        <Image
+                                            src="/assets/github.svg"
+                                            alt='email'
+                                            fill
+                                            className='cursor-pointer rounded-full'
+                                        />
+                                    </div>
+                                    <h2 className=' text-black text-heading3-bold'>
+                                        Github
+                                    </h2>
+                                    <a href={userInfo.contactInfo.github} target="_blank" className='text-base-medium text-blue'>
+                                        {userInfo.contactInfo.github}
+                                    </a>
+                                </div>
+                            }
+
+
+
+
+
+                        </div>
+
+                    </TabsContent>
+
+
 
                 </Tabs>
             </div>

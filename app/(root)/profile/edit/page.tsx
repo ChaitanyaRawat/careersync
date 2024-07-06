@@ -53,7 +53,7 @@ async function Page() {
             <p className='mt-3 text-base-regular text-gray-700'>Make any changes</p>
 
             <section className='mt-12'>
-                <AccountProfile user={userData} btnTitle='Save changes' userSkillSet={skillSet} qualifications={qualifications} />
+                <AccountProfile user={userData} btnTitle='Save changes' userSkillSet={skillSet} qualifications={qualifications} contactInfo={userInfo?.contactInfo} />
             </section>
         </>
     );
