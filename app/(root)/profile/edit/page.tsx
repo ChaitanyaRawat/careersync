@@ -2,7 +2,7 @@ import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
 import { fetchUser } from "@/lib/actions/user.actions";
-import AccountProfile from "@/components/forms/AccountProfile";
+import AccountProfile, { qualification } from "@/components/forms/AccountProfile";
 
 // Copy paste most of the code as it is from the /onboarding
 
@@ -12,6 +12,8 @@ async function Page() {
 
     const userInfo = await fetchUser(user.id);
     if (!userInfo?.onboarded) redirect("/onboarding");
+    // const qualifications:qualification[]=[]
+
 
     const skillSet = [];
     // iterate over each element in userInfo.skillSet
@@ -22,6 +24,15 @@ async function Page() {
             skillName: userInfo?.skillSet[i].skillName,
             credentials: userInfo?.skillSet[i].credentials
         });
+    }
+
+    const qualifications: qualification[] = []
+    for (let i = 0; i < userInfo?.qualifications.length; i++) {
+        qualifications.push({
+            name: userInfo?.qualifications[i].name,
+            credentialUrl: userInfo?.qualifications[i].credentialUrl,
+            issuingAuthority: userInfo?.qualifications[i].issuingAuthority
+        })
     }
 
     // console.log("skillset = ", skillSet)
@@ -42,7 +53,7 @@ async function Page() {
             <p className='mt-3 text-base-regular text-gray-700'>Make any changes</p>
 
             <section className='mt-12'>
-                <AccountProfile user={userData} btnTitle='Continue' userSkillSet={skillSet} />
+                <AccountProfile user={userData} btnTitle='Save changes' userSkillSet={skillSet} qualifications={qualifications} />
             </section>
         </>
     );

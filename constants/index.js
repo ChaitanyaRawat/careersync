@@ -35,7 +35,7 @@ export const sidebarLinks = [
   export const profileTabs = [
     { value: "skills", label: "Skills", icon: "/assets/skills.svg" },
     { value: "posts", label: "Posts", icon: "/assets/reply.svg" },
-    // { value: "experience", label: "Experience", icon: "/assets/tag.svg" },
+    { value: "qualifications", label: "Qualifications", icon: "/assets/tag.svg" },
   ];
   
   export const communityTabs = [

@@ -6,6 +6,7 @@ import Pagination from "@/components/shared/Pagination";
 
 import { fetchPosts } from "@/lib/actions/thread.actions";
 import { fetchUser } from "@/lib/actions/user.actions";
+import PostSearchbar from "@/components/shared/PostSearchbar";
 
 async function Home({
   searchParams,
@@ -18,17 +19,26 @@ async function Home({
   const userInfo = await fetchUser(user.id);
   if (!userInfo?.onboarded) redirect("/onboarding");
 
+  const tags: string[] | undefined = searchParams?.tags?.split(",").map(decodeURIComponent)
+  const q: string | undefined = decodeURIComponent(searchParams?.q || "")
+
+  // console.log("q = ", q)
+  // console.log("tags = ", tags)
   const result = await fetchPosts(
     searchParams.page ? +searchParams.page : 1,
-    30
+    30,
+    q,
+    (tags?.length === 1 && tags[0] === "" ? [] : tags)
   );
+
 
 
 
   return (
     <>
       <h1 className='head-text text-left'>Home</h1>
-      
+      <p className="mb-4">Explore all the latest posts</p>
+      <PostSearchbar routeType="" />
 
       <section className='mt-9 flex flex-col gap-10'>
         {result.posts.length === 0 ? (
@@ -49,7 +59,7 @@ async function Home({
                 tags={post.tags}
                 urls={post.urls}
                 attachment={post.attachment}
-                likedBy={ post.likedBy }
+                likedBy={post.likedBy}
               />
             ))}
           </>

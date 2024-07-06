@@ -8,7 +8,9 @@ import Thread from "../models/thread.model";
 import User from "../models/user.model";
 
 import { connectToDB } from "../mongoose";
-import { skill } from "@/components/forms/AccountProfile";
+import { qualification, skill } from "@/components/forms/AccountProfile";
+import { clerkClient } from "@clerk/nextjs/server";
+import { UTApi } from "uploadthing/server";
 
 export async function fetchUser(userId: string) {
     try {
@@ -31,6 +33,7 @@ interface Params {
     image: string;
     path: string;
     skillSet: skill[];
+    qualifications: qualification[];
 }
 
 export async function updateUser({
@@ -41,6 +44,7 @@ export async function updateUser({
     username,
     image,
     skillSet,
+    qualifications,
 }: Params): Promise<void> {
     try {
         connectToDB();
@@ -54,6 +58,7 @@ export async function updateUser({
                 image,
                 onboarded: true,
                 skillSet: skillSet,
+                qualifications: qualifications,
             },
             { upsert: true }
         );
@@ -63,6 +68,24 @@ export async function updateUser({
         }
     } catch (error: any) {
         throw new Error(`Failed to create/update user: ${error.message}`);
+    }
+}
+
+export async function deleteUser(userId: string) {
+    try {
+        connectToDB();
+        const user = await User.findOne({ id: userId });
+        if (user.image) {
+            const utapi = new UTApi();
+            const fileId = user.image.substring(18);
+            await utapi.deleteFiles(fileId);
+
+        }
+        await clerkClient.users.deleteUser(userId);
+        await User.findOneAndDelete({ id: userId });
+    } catch (error) {
+        console.error("Error deleting user:", error);
+        throw error;
     }
 }
 
@@ -106,7 +129,7 @@ export async function fetchUserPosts(userId: string) {
                         model: User,
                         select: "name image id", // Select the "name" and "_id" fields from the "User" model
                     },
-                    
+
                 },
                 {
                     path: "likedBy",

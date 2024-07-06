@@ -2,7 +2,7 @@ import React from "react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
-import { dark } from "@clerk/themes";
+
 
 import "../globals.css";
 import LeftSidebar from "@/components/shared/LeftSidebar";
@@ -26,14 +26,17 @@ export default function RootLayout({
   return (
     <ClerkProvider
       appearance={{
-        baseTheme: dark,
+        variables: {
+
+          colorText: "black",
+        }
       }}
     >
       <html lang='en'>
         <body className={inter.className}>
           <Topbar />
 
-          <main className='flex flex-row min-h-screen'>
+          <main className='flex flex-row min-h-screen bg-gray-200'>
             <LeftSidebar />
             <section className='main-container'>
               <div className='w-full max-w-4xl'>{children}</div>

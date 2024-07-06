@@ -47,6 +47,16 @@ const userSchema = new mongoose.Schema({
             credentials: [String],
         },
     ],
+    qualifications: [
+        {
+            name: { type: String, required: true },
+            credentialUrl: { type: String, required: true },
+            // issueDate: { type: String, required: true },
+            issuingAuthority: { type: String, required: true },
+            image: { type: String, required: true },
+        }
+    ]
+
     // experiences: [
     //     {
     //         companyName: {

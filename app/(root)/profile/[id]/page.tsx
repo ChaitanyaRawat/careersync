@@ -10,6 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { fetchUser } from "@/lib/actions/user.actions";
 import SkillTab from "@/components/shared/SkillTab";
+import QualificationTab from "@/components/shared/QualificationTab";
 // import SkillForm from "@/components/forms/SkillForm";
 
 async function Page({ params }: { params: { id: string } }) {
@@ -95,6 +96,15 @@ async function Page({ params }: { params: { id: string } }) {
                     >
                         <SkillTab skills={skillSet} />
 
+                    </TabsContent>
+
+                    
+                    <TabsContent
+                        value="qualifications"
+                        className="w-full text-black"
+                    >
+                        
+                        <QualificationTab   qualifications={userInfo?.qualifications} />
                     </TabsContent>
 
                 </Tabs>

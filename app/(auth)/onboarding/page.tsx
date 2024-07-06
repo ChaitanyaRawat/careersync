@@ -23,11 +23,11 @@ async function Page() {
     return (
         <main className='mx-auto flex max-w-3xl flex-col justify-start px-10 py-20'>
             <h1 className='head-text'>Onboarding</h1>
-            <p className='mt-3 text-base-regular text-light-2'>
-                Complete your profile now, to use Threds.
+            <p className='mt-3 text-base-regular text-black'>
+                Complete your profile now, to use CareerSync.
             </p>
 
-            <section className='mt-9 bg-dark-2 p-10'>
+            <section className='mt-9 bg-white p-10 rounded-lg'>
                 <AccountProfile user={userData} btnTitle='Continue' />
             </section>
         </main>
