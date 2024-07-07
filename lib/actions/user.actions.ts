@@ -8,7 +8,7 @@ import Thread from "../models/thread.model";
 import User from "../models/user.model";
 
 import { connectToDB } from "../mongoose";
-import { qualification, skill } from "@/components/forms/AccountProfile";
+import { experience, qualification, skill } from "@/components/forms/AccountProfile";
 import { clerkClient } from "@clerk/nextjs/server";
 import { UTApi } from "uploadthing/server";
 
@@ -40,6 +40,7 @@ interface Params {
         whatsapp: string;
         github: string;
     };
+    experiences:experience[]
 }
 
 export async function updateUser({
@@ -51,7 +52,8 @@ export async function updateUser({
     image,
     skillSet,
     qualifications,
-    contactInfo
+    contactInfo,
+    experiences
 }: Params): Promise<void> {
     try {
         connectToDB();
@@ -66,7 +68,8 @@ export async function updateUser({
                 onboarded: true,
                 skillSet: skillSet,
                 qualifications: qualifications,
-                contactInfo: contactInfo
+                contactInfo: contactInfo,
+                experiences:experiences
             },
             { upsert: true }
         );

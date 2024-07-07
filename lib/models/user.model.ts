@@ -32,7 +32,7 @@ const userSchema = new mongoose.Schema({
             ref: "Community",
         },
     ],
-   
+
     skillSet: [
         {
             skillName: {
@@ -51,27 +51,36 @@ const userSchema = new mongoose.Schema({
             image: { type: String, required: true },
         }
     ],
-    contactInfo:{
+    contactInfo: {
         email: String,
         phone: String,
         whatsapp: String,
         github: String,
-    }
+    },
 
-    // experiences: [
-    //     {
-    //         companyName: {
-    //             type: mongoose.Schema.Types.ObjectId,
-    //             ref: "Community",
-    //             required: true,
-    //         },
-    //         position: {
-    //             type: String,
-    //             required: true,
-    //         },
-    //         credentials: [String],
-    //     },
-    // ],
+    experiences: [
+        {
+            companyName: {
+                type: String,
+                required: true,
+            },
+            position: {
+                type: String,
+                required: true,
+            },
+            from: {
+                type: Date,
+                required: true,
+            },
+            to: {
+                type: Date,
+            },
+            description: {
+                type: String,
+            },
+            credential: String,
+        },
+    ],
 
 
 });

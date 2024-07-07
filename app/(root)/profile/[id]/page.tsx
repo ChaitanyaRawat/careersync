@@ -11,6 +11,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { fetchUser } from "@/lib/actions/user.actions";
 import SkillTab from "@/components/shared/SkillTab";
 import QualificationTab from "@/components/shared/QualificationTab";
+import ExperiencesTab from "@/components/shared/ExperiencesTab";
+import { experience } from "@/components/forms/AccountProfile";
 // import SkillForm from "@/components/forms/SkillForm";
 
 async function Page({ params }: { params: { id: string } }) {
@@ -19,8 +21,7 @@ async function Page({ params }: { params: { id: string } }) {
 
     const userInfo = await fetchUser(params.id);
     if (!userInfo?.onboarded) redirect("/onboarding");
-    console.log("userInfo = ", userInfo);
-
+    // console.log("userInfo = ", userInfo);
     const skillSet = [];
     // iterate over each element in userInfo.skillSet
     for (let i = 0; i < userInfo?.skillSet.length; i++) {
@@ -31,6 +32,20 @@ async function Page({ params }: { params: { id: string } }) {
             credentials: userInfo?.skillSet[i].credentials
         });
     }
+
+    const experiences: experience[] = []
+
+    for (let i = 0; i < userInfo?.experiences.length; i++) {
+        experiences.push({
+            companyName: userInfo?.experiences[i].companyName,
+            position: userInfo?.experiences[i].position,
+            from: userInfo?.experiences[i].from,
+            to: userInfo?.experiences[i].to,
+            description: userInfo?.experiences[i].description,
+            credential: userInfo?.experiences[i].credential
+        })
+    }
+
 
     return (
         <section>
@@ -111,7 +126,7 @@ async function Page({ params }: { params: { id: string } }) {
                         value="experience"
                         className="w-full text-black"
                     >
-                        experiences
+                        <ExperiencesTab userExperiences={JSON.stringify(experiences)} />
 
                     </TabsContent>
 

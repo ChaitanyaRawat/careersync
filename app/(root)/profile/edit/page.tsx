@@ -2,7 +2,7 @@ import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
 import { fetchUser } from "@/lib/actions/user.actions";
-import AccountProfile, { qualification } from "@/components/forms/AccountProfile";
+import AccountProfile, { experience, qualification } from "@/components/forms/AccountProfile";
 
 // Copy paste most of the code as it is from the /onboarding
 
@@ -35,6 +35,19 @@ async function Page() {
         })
     }
 
+    const experiences: experience[] = []
+    for (let i = 0; i < userInfo?.experiences.length; i++) {
+        experiences.push({
+            companyName: userInfo?.experiences[i].companyName,
+            position: userInfo?.experiences[i].position,
+            from: userInfo?.experiences[i].from,
+            to: userInfo?.experiences[i].to,
+            description: userInfo?.experiences[i].description,
+            credential: userInfo?.experiences[i].credential
+        })
+    }
+    // console.log("experiences = ", experiences)
+
     // console.log("skillset = ", skillSet)
     const userData = {
         id: user.id,
@@ -47,13 +60,22 @@ async function Page() {
 
     };
 
+    console.log("userInfo = ", userInfo)
+
     return (
         <>
             <h1 className='head-text'>Edit Profile</h1>
             <p className='mt-3 text-base-regular text-gray-700'>Make any changes</p>
 
             <section className='mt-12'>
-                <AccountProfile user={userData} btnTitle='Save changes' userSkillSet={skillSet} qualifications={qualifications} contactInfo={userInfo?.contactInfo} />
+                <AccountProfile
+                    user={userData}
+                    btnTitle='Save changes'
+                    userSkillSet={skillSet}
+                    qualifications={qualifications}
+                    contactInfo={userInfo?.contactInfo}
+                    experiences={JSON.stringify(experiences)}
+                />
             </section>
         </>
     );

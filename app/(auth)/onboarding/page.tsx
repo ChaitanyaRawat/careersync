@@ -28,7 +28,14 @@ async function Page() {
             </p>
 
             <section className='mt-9 bg-white p-10 rounded-lg'>
-                <AccountProfile user={userData} btnTitle='Continue' />
+                <AccountProfile 
+                user={userData} 
+                btnTitle='Continue' 
+                userSkillSet={userInfo?.skillSet || []} 
+                qualifications={userInfo?.qualifications || []} 
+                contactInfo={userInfo?.contactInfo || {}}
+                experiences={userInfo?.experiences || []}
+                />
             </section>
         </main>
     );
