@@ -14,6 +14,7 @@ const communitySchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    websiteUrl: String,
     image: String,
     bio: String,
     createdBy: {

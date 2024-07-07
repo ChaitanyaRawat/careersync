@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { useOrganization } from "@clerk/nextjs";
 
 interface Props {
     accountId: string;
@@ -9,6 +12,8 @@ interface Props {
     imgUrl: string;
     bio: string;
     type?: string;
+    orgId?: string;
+    websiteUrl?: string;
 }
 
 function ProfileHeader({
@@ -19,7 +24,12 @@ function ProfileHeader({
     imgUrl,
     bio,
     type,
+    orgId,
+    websiteUrl,
 }: Props) {
+    const { organization } = useOrganization();
+    console.log("organization = ", organization);
+    console.log("accountId = ", accountId);
     return (
         <div className='flex w-full flex-col justify-start'>
             <div className='flex items-center justify-between'>
@@ -54,9 +64,36 @@ function ProfileHeader({
                         </div>
                     </Link>
                 )}
+                {type === "Community" && organization?.id === orgId && (
+                    <Link href={`/communities/${orgId}/edit`}>
+                        <div className='flex cursor-pointer gap-3 rounded-lg bg-white px-4 py-2'>
+                            <Image
+                                src='/assets/edit.svg'
+                                alt='logout'
+                                width={16}
+                                height={16}
+                            />
+
+                            <p className='text-black max-sm:hidden'>Edit</p>
+                        </div>
+                    </Link>
+                )
+
+                }
             </div>
 
             <p className='mt-6 max-w-lg text-base-regular text-black'>{bio}</p>
+
+            {websiteUrl && (
+                <a
+                    href={websiteUrl}
+                    target='_blank'
+
+                    className='mt-6 text-base-regular text-blue'
+                >
+                    {websiteUrl}
+                </a>
+            )}
 
             <div className='mt-12 h-0.5 w-full bg-gray-300' />
         </div>

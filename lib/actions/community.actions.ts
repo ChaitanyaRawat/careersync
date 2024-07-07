@@ -252,22 +252,26 @@ export async function updateCommunityInfo(
     communityId: string,
     name: string,
     username: string,
-    image: string
+    image: string,
+    bio?: string,
+    websiteUrl?: string
 ) {
     try {
         connectToDB();
 
+        console.log("bio = ", bio);
+        console.log("websiteUrl = ", websiteUrl);
         // Find the community by its _id and update the information
         const updatedCommunity = await Community.findOneAndUpdate(
             { id: communityId },
-            { name, username, image }
+            { name, username, image, bio: bio ? bio : "", websiteUrl: websiteUrl ? websiteUrl : "" },
         );
 
         if (!updatedCommunity) {
             throw new Error("Community not found");
         }
 
-        return updatedCommunity;
+        // return updatedCommunity;
     } catch (error) {
         // Handle any errors
         console.error("Error updating community information:", error);
@@ -489,6 +493,56 @@ export async function rejectApplication({ oid, userOid }: { oid: string, userOid
         console.error("Error rejecting application: ", error);
         throw error;
     }
+}
+
+
+export async function fetchAllJobOpenings(pageNumber = 1, pageSize = 20, query = "", skills: string[] = []) {
+    connectToDB();
+    console.log("skills = ", skills);
+    console.log("query = ", query);
+    const queryRegex = new RegExp(query.trim(), "i");
+    // Calculate the number of posts to skip based on the page number and page size.
+    const skipAmount = (pageNumber - 1) * pageSize;
+    const mainQuery: FilterQuery<typeof JobOpening> = {
+        $or: [
+            { title: { $regex: queryRegex } },
+            { description: { $regex: queryRegex } },
+        ],
+
+
+    }
+    if (skills.length > 0) {
+        mainQuery.$and = skills.map(skill => ({
+            demandedSkills: { $regex: new RegExp(skill.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i') }  // Replace special characters with their escaped equivalents
+
+        }))
+    }
+
+    // Create a query to fetch the posts that have no parent (top-level threads) (a thread that is not a comment/reply).
+
+    const openingQuery = JobOpening.find(mainQuery)
+        .populate({
+            path: "createdBy",
+            model: User,
+            select: "name image id",
+        })
+        .sort({ createdAt: "desc" })
+        .skip(skipAmount)
+        .limit(pageSize)
+
+
+
+
+
+
+    // Count the total number of top-level posts (threads) i.e., threads that are not comments.
+    const totalOpportunitiesCount = await JobOpening.countDocuments(mainQuery); // Get the total count of posts
+
+    const opportunities = await openingQuery.exec();
+
+    const isNext = totalOpportunitiesCount > skipAmount + opportunities.length;
+
+    return { opportunities, isNext };
 }
 
 
