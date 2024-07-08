@@ -9,7 +9,7 @@ export default function Page() {
                 <div className="lg:w-1/2 xl:w-5/12 p-6 sm:p-12 flex justify-center items-center">
                    <SignIn />
                 </div>
-                <div className="flex-1 bg-[url('/sign-in-image.jpg')] bg-cover bg-center bg-no-repeat text-center hidden lg:flex">
+                <div className="flex-1 bg-[url('/career-login.jpg')] bg-cover bg-center bg-no-repeat text-center hidden lg:flex">
                     
                 </div>
             </div>

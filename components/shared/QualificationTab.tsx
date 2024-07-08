@@ -9,7 +9,7 @@ const QualificationTab = ({ qualifications }: { qualifications: qualification[] 
             {(qualifications && qualifications.length) > 0 && (
                 qualifications.map((qualification) => (
 
-                    <div className='w-full flex flex-col bg-white p-2 rounded-lg my-2'>
+                    <div className='w-full flex flex-col bg-white p-2 rounded-lg my-2 overflow-auto'>
 
                         
 

@@ -51,7 +51,7 @@ const TagInput: React.FC<TagInputProps> = ({ tags, setTags }) => {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={addTag}
-                placeholder="Add a tag"
+                placeholder="Add tags"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md"
             />
             <p className={`text-red-500 ${validTag ? 'hidden' : 'block'}`}>please enter a valid tag</p>

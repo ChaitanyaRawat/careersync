@@ -15,7 +15,7 @@ export const sidebarLinks = [
       label: "Search",
     },
     {
-      imgURL: "/assets/heart.svg",
+      imgURL: "/assets/activity.svg",
       route: "/activity",
       label: "Activity",
     },
@@ -25,9 +25,14 @@ export const sidebarLinks = [
       label: "Create Posts",
     },
     {
-      imgURL: "/assets/community.svg",
+      imgURL: "/assets/company.svg",
       route: "/communities",
-      label: "Communities",
+      label: "Companies",
+    },
+    {
+      imgURL: "/assets/job-opening.png",
+      route: "/job-openings",
+      label: "Job Openings",
     },
     
   ];
@@ -35,15 +40,15 @@ export const sidebarLinks = [
   export const profileTabs = [
     { value: "skills", label: "Skills", icon: "/assets/skills.svg" },
     { value: "posts", label: "Posts", icon: "/assets/reply.svg" },
-    { value: "qualifications", label: "Qualifications", icon: "/assets/tag.svg" },
-    { value: "experience", label: "Experiences", icon: "/assets/tag.svg" },
-    { value: "contactInfo", label: "Contact Info", icon: "/assets/tag.svg" },
+    { value: "qualifications", label: "Qualifications", icon: "/assets/qualification.svg" },
+    { value: "experience", label: "Experiences", icon: "/assets/experience.svg" },
+    { value: "contactInfo", label: "Contact Info", icon: "/assets/contact.svg" },
 
 
   ];
   
   export const communityTabs = [
-    { value: "threads", label: "Threads", icon: "/assets/reply.svg" },
+    { value: "posts", label: "Posts", icon: "/assets/reply.svg" },
     { value: "members", label: "Members", icon: "/assets/members.svg" },
     { value: "jobOpenings", label: "Job Openings", icon: "/assets/request.svg" },
   ];

@@ -228,7 +228,7 @@ async function ThreadCard({
             <Accordion type="single" collapsible className="w-full">
                 {urls.length > 0 && (
                     <AccordionItem value="item-1">
-                        <AccordionTrigger className="text-black">View Attached Urls</AccordionTrigger>
+                        <AccordionTrigger className="text-black">View Urls</AccordionTrigger>
                         <AccordionContent className="pt-3 overflow-scroll">
 
 
@@ -251,7 +251,7 @@ async function ThreadCard({
                     tags.length > 0 && (
 
                         <AccordionItem value="item-2">
-                            <AccordionTrigger className="text-black">view tags</AccordionTrigger>
+                            <AccordionTrigger className="text-black">View Tags</AccordionTrigger>
                             <AccordionContent className="pt-3 overflow-scroll">
                                 {tags.length === 0 && <p className="text-black">No Tags Attached</p>}
                                 {tags.map((curr) => (

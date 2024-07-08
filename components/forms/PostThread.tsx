@@ -180,7 +180,7 @@ function PostThread({ userId }: Props) {
                 <PostUrl urls={urls} setUrls={setUrls} />
 
                 <Button type='submit' className='bg-primary-500'>
-                    Post Thread
+                    Post
                 </Button>
             </form>
         </Form>

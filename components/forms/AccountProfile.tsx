@@ -93,14 +93,17 @@ const AccountProfile = ({ user, btnTitle, userSkillSet, qualifications, contactI
     const { startUpload } = useUploadThing("media");
     const [files, setFiles] = useState<File[]>([]);
     const [isLoading, setisLoading] = useState<boolean>(false)
+    console.log("user recived= ", user)
 
 
+    
 
     // skill related
     const [skills, setSkills] = useState<skill[]>(skillSet);
     const [inputCredentialName, setInputCredentialName] = useState<string>("");
     const [disabledButtons, setDisabledButtons] = useState<boolean>(false)
     const [credentialArray, setCredentialArray] = useState<string[]>([])
+
 
 
 
@@ -122,7 +125,7 @@ const AccountProfile = ({ user, btnTitle, userSkillSet, qualifications, contactI
 
 
     // experience related
-    const [experiencesArray, setExperiencesArray] = useState<experience[]>(JSON.parse(experiences) || [])
+    const [experiencesArray, setExperiencesArray] = useState<experience[]>( experiences ? JSON.parse(experiences) : [])
     const [experienceNameInput, setExperienceNameInput] = useState<string>("")
     const [experiencePositionInput, setExperiencePositionInput] = useState<string>("")
     const [experienceFromInput, setExperienceFromInput] = useState("")

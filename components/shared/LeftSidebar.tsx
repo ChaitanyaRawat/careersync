@@ -18,7 +18,7 @@ const LeftSidebar = () => {
         <>
             <Script src="https://cdn.lordicon.com/lordicon.js"></Script>
             <section className='custom-scrollbar leftsidebar'>
-                <div className='flex w-full flex-1 flex-col gap-6 px-6'>
+                <div className='flex w-full flex-1 flex-col gap- px-6'>
                     {sidebarLinks.map((link) => {
                         const isActive =
                             (pathname.includes(link.route) && link.route.length > 1) ||
@@ -37,7 +37,7 @@ const LeftSidebar = () => {
                                     alt={link.label}
                                     width={24}
                                     height={24}
-                                    className={`${!isActive && "invert"}`}
+                                    className={`${isActive && "invert"}`}
                                 />
 
 
@@ -74,12 +74,13 @@ const LeftSidebar = () => {
                             <div className='flex cursor-pointer gap-4 p-4'>
                                 <Image
                                     src='/assets/logout.svg'
+                                   
                                     alt='logout'
                                     width={24}
                                     height={24}
                                 />
 
-                                <p className='text-light-2 max-lg:hidden'>Logout</p>
+                                <p className='text-black max-lg:hidden'>Logout</p>
                             </div>
                         </SignOutButton>
                     </SignedIn>

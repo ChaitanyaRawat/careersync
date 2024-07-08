@@ -44,7 +44,7 @@ const PostUrl: React.FC<URLInputProps> = ({ urls, setUrls }) => {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={addUrl}
-                placeholder="Add a Url"
+                placeholder="Add URLs"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md"
             />
             

@@ -17,6 +17,7 @@ import { Button } from '../ui/button';
 import { useState } from 'react';
 import { updateCommunityInfo } from '@/lib/actions/community.actions';
 import Loader from '../shared/Loader';
+import { useRouter } from 'next/navigation';
 
 const CommunityValidation = z.object({
     bio: z.string().nonempty().min(3, { message: "Minimum 3 characters." }),
@@ -24,6 +25,7 @@ const CommunityValidation = z.object({
 });
 
 const CompanyProfile = ({ orgInfo }: { orgInfo: string }) => {
+    const router = useRouter();
     const [isLoading, setisLoading] = useState<boolean>(false);
     const { organization } = useOrganization();
     const orgDetails = JSON.parse(orgInfo);
@@ -46,6 +48,11 @@ const CompanyProfile = ({ orgInfo }: { orgInfo: string }) => {
         console.log("values = ", values);
         setisLoading(true);
         await updateCommunityInfo(orgDetails.id, orgDetails.name, orgDetails.username, orgDetails.image, values.bio, values.websiteUrl);
+        // delay
+        setTimeout(() => {
+            
+        }, 1000);
+        router.push(`/communities/${orgDetails.id}`);
         setisLoading(false);
     };
     return (

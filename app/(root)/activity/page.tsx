@@ -44,9 +44,9 @@ async function Page() {
               className='object-contain'
             />
             <p className='max-sm:hidden'>{"Comments"}</p>
-            <p className='ml-1 rounded-sm bg-light-4 px-2 py-1 !text-tiny-medium text-light-2'>
+            {/* <p className='ml-1 rounded-sm bg-light-4 px-2 py-1 !text-tiny-medium text-light-2'>
               {commentActivity.length}
-            </p>
+            </p> */}
           </TabsTrigger>
         </TabsList>
 
@@ -111,7 +111,7 @@ async function Page() {
                         <span className='mr-1 text-primary-500 font-bold'>
                           {activity.author.name}
                         </span>{" "}
-                        replied to your post
+                        commented on your post
                       </p>
                     </article>
                   </Link>

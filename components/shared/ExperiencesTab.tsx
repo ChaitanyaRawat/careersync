@@ -3,11 +3,12 @@ import { experience } from "../forms/AccountProfile"
 
 const ExperiencesTab = ({ userExperiences }: { userExperiences: string }) => {
     const experiences = JSON.parse(userExperiences)
+    console.log("experiences = ", experiences)
     return (
         <div className="flex flex-col gap-4">
             {experiences && experiences.length > 0 &&
                 experiences.map((exp: experience, index: Key | null | undefined) => (
-                    <div key={index} className="bg-white rounded-lg w-full text-black p-4 flex flex-col gap-2">
+                    <div key={index} className="bg-white rounded-lg w-full text-black p-4 flex flex-col gap-2 overflow-auto">
                         <h4 className="text-base-semibold text-gray-1"><span className="font-bold text-black">Position : </span>{exp.position}</h4>
                         <h4 className="text-base-semibold text-gray-1"><span className="font-bold text-black">Company : </span>{exp.companyName}</h4>
                         <h4 className="text-base-semibold text-gray-1"><span className="font-bold text-black">From : </span>{exp.from.substring(0, 10)}</h4>

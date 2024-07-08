@@ -28,7 +28,7 @@ function Bottombar() {
                                 alt={link.label}
                                 width={16}
                                 height={16}
-                                className='object-contain'
+                                className='object-contain invert'
                             />
 
                             <p className='text-subtle-medium text-light-1 max-sm:hidden'>

@@ -7,8 +7,8 @@ function Topbar() {
     return (
         <nav className='topbar'>
             <Link href='/' className='flex items-center'>
-                <Image src='/logo-icon.png' alt='logo' width={50} height={100} />
-                <p className='text-heading3-bold text-light-1 max-xs:hidden'>CareerSync</p>
+                <Image src='/logo-icon.png' alt='logo' width={40} height={100} />
+                <p className='text-heading4-medium font-bold text-light-1 max-xs:hidden'>CareerSync</p>
             </Link>
 
             <div className='flex items-center gap-1'>
@@ -18,6 +18,7 @@ function Topbar() {
                             <div className='flex cursor-pointer'>
                                 <Image
                                     src='/assets/logout.svg'
+                                    className="invert"
                                     alt='logout'
                                     width={24}
                                     height={24}

@@ -42,7 +42,7 @@ async function Page({ params }: { params: { id: string } }) {
             />
 
             <div className='mt-9'>
-                <Tabs defaultValue='threads' className='w-full'>
+                <Tabs defaultValue='posts' className='w-full'>
                     <TabsList className='tab'>
                         {communityTabs.map((tab) => (
                             <TabsTrigger key={tab.label} value={tab.value} className='tab'>
@@ -64,7 +64,7 @@ async function Page({ params }: { params: { id: string } }) {
                         ))}
                     </TabsList>
 
-                    <TabsContent value='threads' className='w-full text-light-1'>
+                    <TabsContent value='posts' className='w-full text-light-1'>
                         {/* @ts-ignore */}
                         <ThreadsTab
                             currentUserId={user.id}

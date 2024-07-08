@@ -66,14 +66,15 @@ async function Page({ params }: { params: { id: string } }) {
 
 
                     <TabsList className='tab'>
-                        {profileTabs.map((tab) => (
-                            <TabsTrigger key={tab.label} value={tab.value} className='tab' >
+                        {profileTabs.map((tab) =>(
+                            <TabsTrigger key={tab.label} value={tab.value} className='tab'>
                                 <Image
                                     src={tab.icon}
                                     alt={tab.label}
                                     width={24}
                                     height={24}
                                     className='object-contain'
+
                                 />
                                 <p className='max-sm:hidden'>{tab.label}</p>
 
@@ -138,7 +139,7 @@ async function Page({ params }: { params: { id: string } }) {
 
                             {userInfo.contactInfo.email && userInfo.contactInfo.email !== "" &&
 
-                                <div className="flex flex-col md:flex-row w-full items-center gap-3 border-black bg-white p-3 rounded-lg ">
+                                <div className="flex flex-col md:flex-row w-full items-center gap-3 border-black bg-white p-3 rounded-lg overflow-auto">
                                     <div className='relative h-11 w-11'>
                                         <Image
                                             src="/assets/email.svg"
@@ -159,7 +160,7 @@ async function Page({ params }: { params: { id: string } }) {
 
                             {userInfo.contactInfo.phone && userInfo.contactInfo.phone !== "" &&
 
-                                <div className="flex flex-col md:flex-row w-full items-center gap-3 border-black bg-white p-3 rounded-lg ">
+                                <div className="flex flex-col md:flex-row w-full items-center gap-3 border-black bg-white p-3 rounded-lg overflow-auto ">
                                     <div className='relative h-11 w-11'>
                                         <Image
                                             src="/assets/phone.svg"
@@ -179,7 +180,7 @@ async function Page({ params }: { params: { id: string } }) {
 
                             {userInfo.contactInfo.whatsapp && userInfo.contactInfo.whatsapp !== "" &&
 
-                                <div className="flex flex-col md:flex-row w-full items-center gap-3 border-black bg-white p-3 rounded-lg ">
+                                <div className="flex flex-col md:flex-row w-full items-center gap-3 border-black bg-white p-3 rounded-lg overflow-auto ">
                                     <div className='relative h-11 w-11'>
                                         <Image
                                             src="/assets/whatsapp.svg"
@@ -199,7 +200,7 @@ async function Page({ params }: { params: { id: string } }) {
 
                             {userInfo.contactInfo.github && userInfo.contactInfo.github !== "" &&
 
-                                <div className="flex flex-col md:flex-row w-full items-center gap-3 border-black bg-white p-3 rounded-lg ">
+                                <div className="flex flex-col md:flex-row w-full items-center gap-3 border-black bg-white p-3 rounded-lg overflow-auto ">
                                     <div className='relative h-11 w-11'>
                                         <Image
                                             src="/assets/github.svg"

@@ -6,7 +6,7 @@
 
   /* main */
   .main-container {
-    @apply flex min-h-screen flex-1 flex-col items-center bg-light-2 px-6 pb-10 pt-28 max-md:pb-32 sm:px-10;
+    @apply flex min-h-screen flex-1 max-w-[100vw] flex-col items-center bg-light-2 px-6 pb-10 pt-28 max-md:pb-32 sm:px-10;
   }
 
   /* Head Text */
@@ -155,6 +155,3 @@
   @apply mt-10 flex items-center gap-4 border-y border-y-dark-2 py-5 max-xs:flex-col !important;
 }
 
-.comment-form_btn {
-  @apply rounded-3xl bg-primary-500 px-8 py-2 !text-small-regular text-light-1 max-xs:w-full !important;
-}

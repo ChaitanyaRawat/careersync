@@ -13,7 +13,7 @@ const CreateJobOpeningBtn = ({orgId}: {orgId: string}) => {
     if(orgId !== currentUserOrganisationId) return null
     // console.log("organizationId = ", organizationId)
     return (
-        <Button className='user-card_btn' onClick={() => router.push(`/communities/${orgId}/create-job-opening`)}>
+        <Button className='user-card_btn font-bold' onClick={() => router.push(`/communities/${orgId}/create-job-opening`)}>
             Create
         </Button>
             // href={`/communities/${organizationId}/create-job-opening`}
