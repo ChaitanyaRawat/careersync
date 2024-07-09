@@ -16,20 +16,20 @@ const userSchema = new mongoose.Schema({
     },
     image: String,
     bio: String,
-    threads: [
+    careerposts: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Thread",
+            ref: "Careerpost",
         },
     ],
     onboarded: {
         type: Boolean,
         default: false,
     },
-    communities: [
+    companies: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Community",
+            ref: "Company",
         },
     ],
 

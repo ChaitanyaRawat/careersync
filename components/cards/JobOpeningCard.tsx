@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { formatDateString } from "@/lib/utils";
-import DeleteThread from "../forms/DeleteThread";
+import DeleteCareerpost from "../forms/DeleteCareerpost";
 import {
     Accordion,
     AccordionContent,
@@ -10,7 +10,7 @@ import {
     AccordionTrigger,
 } from "../ui/accordion";
 import LikeButton from "../forms/LikeButton";
-import { isLikedByUser } from "@/lib/actions/thread.actions";
+import { isLikedByUser } from "@/lib/actions/careerpost.actions";
 import { Button } from "../ui/button";
 import DeleteJobOpening from "../shared/DeleteJobOpening";
 import mongoose from "mongoose";
@@ -54,25 +54,25 @@ function JobOpeningCard({
 
     return (
         <article
-            className={`flex w-full flex-col bg-white   p-7 rounded-xl overflow-scroll`}
+            className={`flex w-full flex-col bg-white   p-7 rounded-xl`}
         >
-            <div className='flex items-start justify-between'>
+            <div className='flex items-start justify-between overflow-hidden relative'>
                 <div className='flex w-full flex-1 flex-row gap-4'>
                     <div className='flex flex-col items-center'>
-                        <Link href={`/communities/${orgId}`} className='relative h-11 w-11'>
+                        <Link href={`/companies/${orgId}`} className='relative h-11 w-11'>
                             <Image
                                 src={orgImage}
-                                alt='user_community_image'
+                                alt='user_company_image'
                                 fill
                                 className='cursor-pointer rounded-full'
                             />
                         </Link>
 
-                        <div className='thread-card_bar' />
+                        <div className='careerpost-card_bar' />
                     </div>
 
                     <div className='flex w-full flex-col'>
-                        <Link href={`/communities/${orgId}`} className='w-fit'>
+                        <Link href={`/companies/${orgId}`} className='w-fit'>
                             <h4 className='cursor-pointer text-base-semibold text-black'>
                                 {orgName}
                             </h4>
@@ -89,7 +89,7 @@ function JobOpeningCard({
 
                         <h1 className='text-center head-text text-black mt-8'>{title}</h1>
 
-                        <p className='my-4 text-small-regular text-dark-4'>{description}</p>
+                        <p className='my-4 text-small-regular text-dark-4 overflow-auto'>{description}</p>
 
 
                         <div className="max-w-[100%]">
@@ -105,8 +105,10 @@ function JobOpeningCard({
 
                     </div>
                 </div>
+                <div className="absolute top-0 right-0">
 
                 <DeleteJobOpening orgId={orgId} oid={JSON.stringify(oid)} />
+                </div>
             </div>
 
             {/* {!isComment && comments.length > 0 && (
@@ -122,7 +124,7 @@ function JobOpeningCard({
                         />
                     ))}
 
-                    <Link href={`/thread/${id}`}>
+                    <Link href={`/careerpost/${id}`}>
                         <p className='mt-1 text-subtle-medium text-gray-1'>
                             {comments.length} repl{comments.length > 1 ? "ies" : "y"}
                         </p>
@@ -130,19 +132,19 @@ function JobOpeningCard({
                 </div>
             )} */}
 
-            {/* {!isComment && community && (
+            {/* {!isComment && company && (
                 <Link
-                    href={`/communities/${community.id}`}
+                    href={`/companies/${company.id}`}
                     className='mt-5 flex items-center'
                 >
                     <p className='text-subtle-medium text-gray-1'>
                         {formatDateString(createdAt)}
-                        {community && ` - ${community.name} Community`}
+                        {company && ` - ${company.name} Company`}
                     </p>
 
                     <Image
-                        src={community.image}
-                        alt={community.name}
+                        src={company.image}
+                        alt={company.name}
                         width={14}
                         height={14}
                         className='ml-1 rounded-full object-cover'
@@ -196,7 +198,7 @@ function JobOpeningCard({
 
             {showBtn && (
                 <Link
-                    href={`/communities/${orgId}/apply/${oid}`}
+                    href={`/companies/${orgId}/apply/${oid}`}
                     className='bg-primary-500 mt-5 text-white p-2 font-bold text-center rounded-lg hover:bg-black'>
                     Apply
                 </Link>

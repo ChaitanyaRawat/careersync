@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 
 import { profileTabs } from "@/constants";
 
-import ThreadsTab from "@/components/shared/ThreadsTab";
+import CareerpostsTab from "@/components/shared/CareerpostsTab";
 import ProfileHeader from "@/components/shared/ProfileHeader";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -21,7 +21,7 @@ async function Page({ params }: { params: { id: string } }) {
 
     const userInfo = await fetchUser(params.id);
     if (!userInfo?.onboarded) redirect("/onboarding");
-    // console.log("userInfo = ", userInfo);
+  
     const skillSet = [];
     // iterate over each element in userInfo.skillSet
     for (let i = 0; i < userInfo?.skillSet.length; i++) {
@@ -78,9 +78,9 @@ async function Page({ params }: { params: { id: string } }) {
                                 />
                                 <p className='max-sm:hidden'>{tab.label}</p>
 
-                                {tab.label === "Threads" && (
+                                {tab.label === "Careerposts" && (
                                     <p className='ml-1 rounded-sm bg-light-4 px-2 py-1 !text-tiny-medium text-light-2'>
-                                        {userInfo.threads.length}
+                                        {userInfo.careerposts.length}
                                     </p>
                                 )}
                             </TabsTrigger>
@@ -97,7 +97,7 @@ async function Page({ params }: { params: { id: string } }) {
                         className='w-full text-black'
                     >
                         {/* @ts-ignore */}
-                        <ThreadsTab
+                        <CareerpostsTab
                             currentUserId={user.id}
                             accountId={userInfo.id}
                             accountType='User'

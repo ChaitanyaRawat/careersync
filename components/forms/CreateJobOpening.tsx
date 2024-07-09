@@ -18,8 +18,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 
-import { ThreadValidation } from "@/lib/validations/thread";
-import { createThread } from "@/lib/actions/thread.actions";
+import { CareerpostValidation } from "@/lib/validations/careerpost";
+import { createCareerpost } from "@/lib/actions/careerpost.actions";
 
 import PostUrl from "./PostUrl";
 import { useUploadThing } from "@/lib/validations/uploadthing";
@@ -28,7 +28,8 @@ import { Label } from "../ui/label";
 import { CreateJobOpeningValidation } from "@/lib/validations/jobOpening";
 import MultiValueInput from "../shared/MultiValueInput";
 import Image from "next/image";
-import { createJobOpening } from "@/lib/actions/community.actions";
+import { createJobOpening } from "@/lib/actions/company.actions";
+import Loader from "../shared/Loader";
 
 function CreateJobOpening({ orgId, creatorId }: { orgId: string, creatorId: string }) {
 
@@ -41,6 +42,7 @@ function CreateJobOpening({ orgId, creatorId }: { orgId: string, creatorId: stri
     const [demandedSkillArray, setdemandedSkillArray] = useState<string[]>([])
     const [files, setFiles] = useState<File[]>([]);
     const [output, setOutput] = useState(null);
+    const [isLoading, setisLoading] = useState<boolean>(false)
 
     const userMondodbId = JSON.parse(creatorId);
     const { organization } = useOrganization();
@@ -77,7 +79,7 @@ function CreateJobOpening({ orgId, creatorId }: { orgId: string, creatorId: stri
             fileReader.onload = async (event) => {
                 const fileDataUrl = event.target?.result?.toString() || "";
                 fieldChange(fileDataUrl);
-                console.log("attachment = ", fileDataUrl);
+              
             };
 
             fileReader.readAsDataURL(file);
@@ -87,6 +89,7 @@ function CreateJobOpening({ orgId, creatorId }: { orgId: string, creatorId: stri
 
 
     const onSubmit = async (values: z.infer<typeof CreateJobOpeningValidation>) => {
+        setisLoading(true)
         const imgRes = await startUpload(files);
 
         if (imgRes && imgRes.length > 0 && imgRes[0].url) {
@@ -102,7 +105,7 @@ function CreateJobOpening({ orgId, creatorId }: { orgId: string, creatorId: stri
             attachment: values?.attachment || "",
             urls: urlArray
         }
-        // console.log("obj = ", obj)
+   
 
         await createJobOpening({
             orgId: orgId,
@@ -113,7 +116,8 @@ function CreateJobOpening({ orgId, creatorId }: { orgId: string, creatorId: stri
             attachment: values?.attachment || "",
             urls: urlArray
         });
-        router.push(`/communities/${orgId}`);
+        router.push(`/companies/${orgId}`);
+        setisLoading(false)
 
     };
 
@@ -240,7 +244,7 @@ function CreateJobOpening({ orgId, creatorId }: { orgId: string, creatorId: stri
 
 
 
-
+            {isLoading && <Loader />}
         </>
     )
 }

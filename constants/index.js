@@ -21,12 +21,12 @@ export const sidebarLinks = [
     },
     {
       imgURL: "/assets/create.svg",
-      route: "/create-thread",
+      route: "/create-careerpost",
       label: "Create Posts",
     },
     {
       imgURL: "/assets/company.svg",
-      route: "/communities",
+      route: "/companies",
       label: "Companies",
     },
     {
@@ -47,7 +47,7 @@ export const sidebarLinks = [
 
   ];
   
-  export const communityTabs = [
+  export const companyTabs = [
     { value: "posts", label: "Posts", icon: "/assets/reply.svg" },
     { value: "members", label: "Members", icon: "/assets/members.svg" },
     { value: "jobOpenings", label: "Job Openings", icon: "/assets/request.svg" },

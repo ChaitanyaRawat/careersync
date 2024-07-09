@@ -1,7 +1,7 @@
 import JobOpeningCard from "@/components/cards/JobOpeningCard";
 import JobSearchbar from "@/components/shared/JobSearchbar";
 import Pagination from "@/components/shared/Pagination";
-import { fetchAllJobOpenings, fetchCommunityDetails } from "@/lib/actions/community.actions";
+import { fetchAllJobOpenings, fetchCompanyDetails } from "@/lib/actions/company.actions";
 import { fetchUser } from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
@@ -23,8 +23,7 @@ const page = async ({
     const skills: string[] | undefined = searchParams?.skills?.split(",").map(decodeURIComponent)
     const q: string | undefined = decodeURIComponent(searchParams?.q || "")
 
-  console.log("q = ", q)
-  console.log("skills = ", skills)
+
 
     const result = await fetchAllJobOpenings(
         searchParams.page ? +searchParams.page : 1,
@@ -33,7 +32,7 @@ const page = async ({
         (skills?.length === 1 && skills[0] === "" ? [] : skills)
     )
 
-    // console.log("result = ", result)
+
     return (
         <>
             <h1 className='head-text text-left'>Job Openings</h1>
@@ -41,11 +40,11 @@ const page = async ({
             <JobSearchbar routeType="job-openings" />
             <section className='mt-9 flex flex-col gap-10'>
                 {result.opportunities.length === 0 ? (
-                    <p className='no-result'>No threads found</p>
+                    <p className='no-result'>No careerposts found</p>
                 ) : (
                     <>
                         {result.opportunities.map(async (curr) => {
-                            const orgInfo = await fetchCommunityDetails(curr.organisationId)
+                            const orgInfo = await fetchCompanyDetails(curr.organisationId)
 
                             return (
                                 <JobOpeningCard

@@ -1,5 +1,5 @@
 "use client"
-import { revokeApplication } from '@/lib/actions/community.actions'
+import { revokeApplication } from '@/lib/actions/company.actions'
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import { Button } from '../ui/button'
@@ -23,7 +23,7 @@ const RevokeApplication = ({ params, userInfo, hasApplied }: { params: any, user
                 onClick={async () => {
                     setisLoading(true)
                     await revokeApplication({ oid: jParams.oid, userOid: jUserInfo._id })
-                    router.push(`/communities/${jParams.id.toString()}`)
+                    router.push(`/companies/${jParams.id.toString()}`)
                     setisLoading(false)
                 }}
             >

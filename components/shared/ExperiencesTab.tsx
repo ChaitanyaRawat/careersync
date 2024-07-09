@@ -3,7 +3,7 @@ import { experience } from "../forms/AccountProfile"
 
 const ExperiencesTab = ({ userExperiences }: { userExperiences: string }) => {
     const experiences = JSON.parse(userExperiences)
-    console.log("experiences = ", experiences)
+  
     return (
         <div className="flex flex-col gap-4">
             {experiences && experiences.length > 0 &&

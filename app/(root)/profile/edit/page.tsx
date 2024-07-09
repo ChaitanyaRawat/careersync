@@ -46,9 +46,7 @@ async function Page() {
             credential: userInfo?.experiences[i].credential
         })
     }
-    // console.log("experiences = ", experiences)
-
-    // console.log("skillset = ", skillSet)
+  
     const userData = {
         id: user.id,
         objectId: userInfo?._id,
@@ -60,7 +58,7 @@ async function Page() {
 
     };
 
-    console.log("userInfo = ", userInfo)
+
 
     return (
         <>

@@ -16,7 +16,7 @@ interface Props {
 function UserCard({ id, name, username, imgUrl, personType }: Props) {
     const router = useRouter();
 
-    const isCommunity = personType === "Community";
+    const isCompany = personType === "Company";
 
     return (
         <article className='user-card'>
@@ -39,8 +39,8 @@ function UserCard({ id, name, username, imgUrl, personType }: Props) {
             <Button
                 className='user-card_btn'
                 onClick={() => {
-                    if (isCommunity) {
-                        router.push(`/communities/${id}`);
+                    if (isCompany) {
+                        router.push(`/companies/${id}`);
                     } else {
                         router.push(`/profile/${id}`);
                     }

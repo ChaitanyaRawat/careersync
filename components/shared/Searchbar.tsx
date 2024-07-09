@@ -71,7 +71,7 @@ function Searchbar({ routeType }: Props) {
                     className='no-focus searchbar_input'
                 />
             </div>
-            {routeType !== "communities" && (
+            {routeType !== "companies" && (
                 <>
                     <input
                         type="text"

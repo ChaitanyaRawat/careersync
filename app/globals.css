@@ -24,17 +24,17 @@
     @apply text-center !text-base-regular text-light-3;
   }
 
-  /* Community Card */
-  .community-card {
+  /* Company Card */
+  .company-card {
     @apply w-full rounded-lg bg-white px-4 py-5 sm:w-96;
   }
 
-  .community-card_btn {
+  .company-card_btn {
     @apply rounded-lg bg-primary-500 px-5 py-1.5 text-small-regular !text-light-1 !important;
   }
 
-  /* thread card  */
-  .thread-card_bar {
+  /* careerpost card  */
+  .careerpost-card_bar {
     @apply relative mt-2 w-0.5 grow rounded-full bg-neutral-200;
   }
 

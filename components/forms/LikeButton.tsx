@@ -2,29 +2,29 @@
 import { useState } from "react"
 
 import Image from "next/image"
-import { addLike, deleteLike, isLikedByUser } from "@/lib/actions/thread.actions"
+import { addLike, deleteLike, isLikedByUser } from "@/lib/actions/careerpost.actions"
 import { fetchUser } from "@/lib/actions/user.actions"
 
 interface Props {
-    threadId: string
+    careerpostId: string
     currentUserId: string
     isLiked: boolean
 }
 
-const LikeButton = ({ threadId, currentUserId, isLiked }: Props) => {
+const LikeButton = ({ careerpostId, currentUserId, isLiked }: Props) => {
 
     const [likeState, setLikeState] = useState<boolean>(isLiked)
-    // console.log("likeState = ", likeState)
+    
 
     const handleLike = async () => {
         let prev = likeState;
         setLikeState(!likeState)
 
         if (!prev) {
-            // console.log("likeState = ", likeState)
-            await addLike(threadId, currentUserId, window.location.pathname)
+          
+            await addLike(careerpostId, currentUserId, window.location.pathname)
         } else {
-            await deleteLike(threadId, currentUserId, window.location.pathname)
+            await deleteLike(careerpostId, currentUserId, window.location.pathname)
         }
     }
     return (

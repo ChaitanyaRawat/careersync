@@ -14,7 +14,7 @@ async function Page() {
 
   const commentActivity = await getCommentActivity(userInfo._id);
   const likeActivity = await getLikeActivity(userInfo._id);
-  // console.log("like activity = ", likeActivity);
+
 
   return (
     <>
@@ -63,7 +63,7 @@ async function Page() {
                     {post.likedBy.length > 0 &&
                       post.likedBy.map((userLiked: any) => {
                         return (
-                          <Link key={post._id} href={`/thread/${post._id}`}>
+                          <Link key={post._id} href={`/careerpost/${post._id}`}>
                             <article className='activity-card'>
                               <Image
                                 src={userLiked.image}
@@ -98,7 +98,7 @@ async function Page() {
             {commentActivity.length > 0 ? (
               <>
                 {commentActivity.map((activity) => (
-                  <Link key={activity._id} href={`/thread/${activity.parentId}`}>
+                  <Link key={activity._id} href={`/careerpost/${activity.parentId}`}>
                     <article className='activity-card'>
                       <Image
                         src={activity.author.image}

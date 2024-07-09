@@ -10,7 +10,7 @@ import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { useRouter } from 'next/navigation';
 import { useToast } from '../ui/use-toast';
-import { addApplication } from '@/lib/actions/community.actions';
+import { addApplication } from '@/lib/actions/company.actions';
 import Loader from '../shared/Loader';
 
 export const JobApplicationValidation = z.object({
@@ -49,7 +49,7 @@ const JobApplicationForm = ({ orgId, oid, userOid }: { orgId: string, oid: strin
             fileReader.onload = async (event) => {
                 const fileDataUrl = event.target?.result?.toString() || "";
                 fieldChange(fileDataUrl);
-                console.log("attachment = ", fileDataUrl);
+               
             };
 
             fileReader.readAsDataURL(file);
@@ -75,7 +75,7 @@ const JobApplicationForm = ({ orgId, oid, userOid }: { orgId: string, oid: strin
 
 
 
-        await router.push(`/communities/${orgId}`);
+        await router.push(`/companies/${orgId}`);
         toast({
             title: "You Have succesfully applied for this job",
             className: "text-sm font-bold text-green-500",

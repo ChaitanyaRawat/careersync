@@ -15,11 +15,11 @@ import { Textarea } from '../ui/textarea';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { useState } from 'react';
-import { updateCommunityInfo } from '@/lib/actions/community.actions';
+import { updateCompanyInfo } from '@/lib/actions/company.actions';
 import Loader from '../shared/Loader';
 import { useRouter } from 'next/navigation';
 
-const CommunityValidation = z.object({
+const CompanyValidation = z.object({
     bio: z.string().nonempty().min(3, { message: "Minimum 3 characters." }),
     websiteUrl: z.string(),
 });
@@ -30,8 +30,8 @@ const CompanyProfile = ({ orgInfo }: { orgInfo: string }) => {
     const { organization } = useOrganization();
     const orgDetails = JSON.parse(orgInfo);
 
-    const form = useForm<z.infer<typeof CommunityValidation>>({
-        resolver: zodResolver(CommunityValidation),
+    const form = useForm<z.infer<typeof CompanyValidation>>({
+        resolver: zodResolver(CompanyValidation),
         defaultValues: {
             bio: orgDetails.bio || "",
             websiteUrl: orgDetails.websiteUrl || "",
@@ -42,17 +42,17 @@ const CompanyProfile = ({ orgInfo }: { orgInfo: string }) => {
     const currOrgId = organization.id;
     if (orgDetails.id !== currOrgId) return null;
     
-    // console.log("orgDetails = ", orgDetails);
+    
 
-    const onSubmit = async (values: z.infer<typeof CommunityValidation>) => {
-        console.log("values = ", values);
+    const onSubmit = async (values: z.infer<typeof CompanyValidation>) => {
+      
         setisLoading(true);
-        await updateCommunityInfo(orgDetails.id, orgDetails.name, orgDetails.username, orgDetails.image, values.bio, values.websiteUrl);
+        await updateCompanyInfo(orgDetails.id, orgDetails.name, orgDetails.username, orgDetails.image, values.bio, values.websiteUrl);
         // delay
         setTimeout(() => {
             
         }, 1000);
-        router.push(`/communities/${orgDetails.id}`);
+        router.push(`/companies/${orgDetails.id}`);
         setisLoading(false);
     };
     return (

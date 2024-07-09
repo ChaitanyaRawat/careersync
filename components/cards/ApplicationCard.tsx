@@ -5,7 +5,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { Button } from "../ui/button"
 import { downloadPDF } from "@/lib/utils"
-import { acceptApplication, rejectApplication } from "@/lib/actions/community.actions"
+import { acceptApplication, rejectApplication } from "@/lib/actions/company.actions"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import Loader from "../shared/Loader"
@@ -14,14 +14,14 @@ const ApplicationCard = ({ oid, userOid, userImage, name, resume, clerkId, accep
     
     const router = useRouter()
     const [isLoading, setisLoading] = useState<boolean>(false)
-    console.log(name,accepted)
+   
     return (
         <article className="flex w-full flex-col bg-white   p-7 rounded-xl  my-4">
             <div className="flex flex-col md:flex-row gap-4 items-center">
                 <Link href={`/profile/${clerkId}`} className='relative h-11 w-11'>
                     <Image
                         src={userImage}
-                        alt='user_community_image'
+                        alt='user_company_image'
                         fill
                         className='cursor-pointer rounded-full'
                     />

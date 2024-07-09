@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 import { Button } from '../ui/button';
-import { updateUserSkillSet } from '@/lib/actions/user.actions';
+
 import { Accordion, AccordionContent, AccordionTrigger, AccordionItem } from '../ui/accordion';
 
 
@@ -27,7 +27,7 @@ const SkillNameValidation = z.object({
 
 const SkillForm = ({ userId, skillSet }: { userId: string, skillSet: skill[] }) => {
 
-    // console.log("efjcmernjejenwjenhebwcewew37197189e1120812129")
+
     const form = useForm<z.infer<typeof SkillNameValidation>>({
         resolver: zodResolver(SkillNameValidation),
         defaultValues: {
@@ -43,8 +43,7 @@ const SkillForm = ({ userId, skillSet }: { userId: string, skillSet: skill[] }) 
     const [credentialArray, setCredentialArray] = useState<string[]>([])
     useEffect(() => {
         setDisabledButtons(true);
-        // console.log("skills = ", skills);
-        // form.reset()
+     
         setCredentialArray([]);
         setDisabledButtons(false)
     }, [skills])
@@ -84,14 +83,9 @@ const SkillForm = ({ userId, skillSet }: { userId: string, skillSet: skill[] }) 
 
 
     const onSubmit = async (values: z.infer<typeof SkillNameValidation>) => {
-        // console.log("skills given = ", skills);
+      
         setDisabledButtons(true);
-        // await updateUserSkillSet({ userId: userId, skillSet: skills });
-        // await updateUserSkillSet({
-
-        // });
-        // console.log("skillname = ", values.name);
-        // console.log("credentialArray = ", credentialArray);
+       ;
         form.reset();
         setInputCredentialName('');
         setDisabledButtons(false);

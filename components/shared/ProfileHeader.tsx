@@ -28,8 +28,7 @@ function ProfileHeader({
     websiteUrl,
 }: Props) {
     const { organization } = useOrganization();
-    console.log("organization = ", organization);
-    console.log("accountId = ", accountId);
+   
     return (
         <div className='flex w-full flex-col justify-start overflow-auto'>
             <div className='flex items-center justify-between'>
@@ -50,7 +49,7 @@ function ProfileHeader({
                         <p className='text-base-medium text-gray-1'>@{username}</p>
                     </div>
                 </div>
-                {accountId === authUserId && type !== "Community" && (
+                {accountId === authUserId && type !== "Company" && (
                     <Link href='/profile/edit'>
                         <div className='flex cursor-pointer gap-3 rounded-lg bg-white px-4 py-2'>
                             <Image
@@ -64,8 +63,8 @@ function ProfileHeader({
                         </div>
                     </Link>
                 )}
-                {type === "Community" && organization?.id === orgId && (
-                    <Link href={`/communities/${orgId}/edit`}>
+                {type === "Company" && organization?.id === orgId && (
+                    <Link href={`/companies/${orgId}/edit`}>
                         <div className='flex cursor-pointer gap-3 rounded-lg bg-white px-4 py-2'>
                             <Image
                                 src='/assets/edit.svg'

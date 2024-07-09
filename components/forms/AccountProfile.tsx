@@ -93,7 +93,7 @@ const AccountProfile = ({ user, btnTitle, userSkillSet, qualifications, contactI
     const { startUpload } = useUploadThing("media");
     const [files, setFiles] = useState<File[]>([]);
     const [isLoading, setisLoading] = useState<boolean>(false)
-    console.log("user recived= ", user)
+  
 
 
     
@@ -151,8 +151,7 @@ const AccountProfile = ({ user, btnTitle, userSkillSet, qualifications, contactI
 
     useEffect(() => {
         setDisabledButtons(true);
-        // console.log("skills = ", skills);
-        // form.reset()
+      
         setCredentialArray([]);
         setDisabledButtons(false)
     }, [skills])
@@ -237,7 +236,7 @@ const AccountProfile = ({ user, btnTitle, userSkillSet, qualifications, contactI
 
 
     const onSubmit = async (values: z.infer<typeof UserValidation>) => {
-        // console.log("skills given = ", skills);
+     
         setisLoading(true);
         setDisabledButtons(true);
 

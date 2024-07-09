@@ -3,8 +3,8 @@
 import { FilterQuery, SortOrder } from "mongoose";
 import { revalidatePath } from "next/cache";
 
-import Community from "../models/community.model";
-import Thread from "../models/thread.model";
+import Company from "../models/company.model";
+import Careerpost from "../models/careerpost.model";
 import User from "../models/user.model";
 
 import { connectToDB } from "../mongoose";
@@ -17,8 +17,8 @@ export async function fetchUser(userId: string) {
         connectToDB();
 
         return await User.findOne({ id: userId }).populate({
-            path: "communities",
-            model: Community,
+            path: "companies",
+            model: Company,
         });
     } catch (error: any) {
         throw new Error(`Failed to fetch user: ${error.message}`);
@@ -100,41 +100,25 @@ export async function deleteUser(userId: string) {
     }
 }
 
-// export async function updateUserSkillSet({ userId, skillSet }: { userId: string, skillSet: skill[] }) {
-//     connectToDB();
-//     try {
-//         console.log("skillset recieved = ", skillSet);
 
-//         await User.findOneAndUpdate(
-//             { id: userId },
-//             {
-//                 skillSet: skillSet,
-//             },
-//             { upsert: true }
-//         );
-//     } catch (error) {
-//         console.error("Error updating user skill set:", error);
-//         throw error;
-//     }
-// }
 
 export async function fetchUserPosts(userId: string) {
     try {
         connectToDB();
 
-        // Find all threads authored by the user with the given userId
-        const threads = await User.findOne({ id: userId }).populate({
-            path: "threads",
-            model: Thread,
+        // Find all careerposts authored by the user with the given userId
+        const careerposts = await User.findOne({ id: userId }).populate({
+            path: "careerposts",
+            model: Careerpost,
             populate: [
                 {
-                    path: "community",
-                    model: Community,
-                    select: "name id image _id", // Select the "name" and "_id" fields from the "Community" model
+                    path: "company",
+                    model: Company,
+                    select: "name id image _id", // Select the "name" and "_id" fields from the "Company" model
                 },
                 {
                     path: "children",
-                    model: Thread,
+                    model: Careerpost,
                     populate: {
                         path: "author",
                         model: User,
@@ -149,14 +133,14 @@ export async function fetchUserPosts(userId: string) {
                 }
             ],
         });
-        return threads;
+        return careerposts;
     } catch (error) {
-        console.error("Error fetching user threads:", error);
+        console.error("Error fetching user careerposts:", error);
         throw error;
     }
 }
 
-// Almost similar to Thead (search + pagination) and Community (search + pagination)
+// Almost similar to Thead (search + pagination) and Company (search + pagination)
 export async function fetchUsers({
     userId,
     searchString = "",
@@ -254,18 +238,18 @@ export async function getCommentActivity(userId: string) {
     try {
         connectToDB();
 
-        // Find all threads created by the user
-        const userThreads = await Thread.find({ author: userId });
+        // Find all careerposts created by the user
+        const userCareerposts = await Careerpost.find({ author: userId });
 
-        // Collect all the child thread ids (replies) from the 'children' field of each user thread
-        const childThreadIds = userThreads.reduce((acc, userThread) => {
-            return acc.concat(userThread.children);
+        // Collect all the child careerpost ids (replies) from the 'children' field of each user careerpost
+        const childCareerpostIds = userCareerposts.reduce((acc, userCareerpost) => {
+            return acc.concat(userCareerpost.children);
         }, []);
 
-        // Find and return the child threads (replies) excluding the ones created by the same user
-        const replies = await Thread.find({
-            _id: { $in: childThreadIds },
-            author: { $ne: userId }, // Exclude threads authored by the same user
+        // Find and return the child careerposts (replies) excluding the ones created by the same user
+        const replies = await Careerpost.find({
+            _id: { $in: childCareerpostIds },
+            author: { $ne: userId }, // Exclude careerposts authored by the same user
         }).populate({
             path: "author",
             model: User,
@@ -285,17 +269,17 @@ export async function getLikeActivity(userId: string) {
     try {
         connectToDB();
 
-        // Find all threads created by the user
-        const userThreads = await Thread.find({ author: userId }).populate({
+        // Find all careerposts created by the user
+        const userCareerposts = await Careerpost.find({ author: userId }).populate({
             path: "likedBy",
             model: User,
             select: "name image id",
         });
 
-        // Collect all the child thread ids (replies) from the 'children' field of each user thread
+        // Collect all the child careerpost ids (replies) from the 'children' field of each user careerpost
 
 
-        return userThreads;
+        return userCareerposts;
     } catch (error) {
         console.error("Error fetching replies: ", error);
         throw error;

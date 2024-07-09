@@ -20,7 +20,7 @@ async function Page({
   if (!userInfo?.onboarded) redirect("/onboarding");
   
   const searchedSkills = searchParams?.s?.split(",").map(decodeURIComponent)
-  console.log("searchedSkills = ", searchedSkills)
+
 
   const result = await fetchUsers({
     userId: user.id,
